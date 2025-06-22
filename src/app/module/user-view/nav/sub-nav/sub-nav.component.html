@@ -55,12 +55,12 @@
 <div *ngIf="!isMenuPage()" class="bg-black text-[#deb074] py-6 mt-20">
   <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center">
 
-    <!-- Heading based on route -->
+  
     <h1 class="text-3xl font-bold mb-2 md:mb-0">
       {{ isAboutPage() ? 'ABOUT US' : (isContactPage() ? 'CONTACT' : '') }}
     </h1>
 
-    <!-- Breadcrumbs based on route -->
+ 
     <div class="space-x-2 flex items-center text-md">
       <a routerLink="/" class="hover:underline">Home</a>
       <span>/</span>
