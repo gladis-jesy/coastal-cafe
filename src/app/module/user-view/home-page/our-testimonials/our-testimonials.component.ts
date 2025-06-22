@@ -1,5 +1,5 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit, OnDestroy, Inject, PLATFORM_ID } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-our-testimonials',
@@ -9,7 +9,6 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./our-testimonials.component.css']
 })
 export class OurTestimonialsComponent implements OnInit, OnDestroy {
-
 
   currentIndex = 0;
   visibleTestimonials :any[]= [];
@@ -25,10 +24,14 @@ export class OurTestimonialsComponent implements OnInit, OnDestroy {
     { name: 'Hannah', feedback: 'Highly recommend for meetings.', image: '/assets/hannah.jpg' }
   ];
 
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
 
   ngOnInit() {
     this.updateVisible();
-    this.autoSlide();
+    // Only start auto-slide in browser environment
+    if (isPlatformBrowser(this.platformId)) {
+      this.autoSlide();
+    }
   }
 
   ngOnDestroy() {
