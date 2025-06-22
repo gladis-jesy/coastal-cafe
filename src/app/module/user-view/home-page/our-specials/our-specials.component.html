@@ -1,28 +1,45 @@
 <section class="bg-gray-50 py-12 px-4 md:px-16 max-w-6xl mx-auto">
-    <p class="text-sm text-gray-600 tracking-widest mb-2 italic font-extrabold double-underline">
-      SPECIALS
+  <div class="mb-6 md:mb-10">
+    <p class="text-xs sm:text-sm uppercase text-gray-500 tracking-widest italic font-semibold mb-2 double-underline">
+      Specials
     </p>
-    <h2 class="text-5xl font-extrabold mb-8 text-gray-900 italic">Check Our Specials</h2>
-  
-    <div class="flex flex-col md:flex-row gap-8">
-  
-      <ul class="md:w-1/4 space-y-2 flex flex-col items-center pt-10">
-        <li *ngFor="let special of specials" (click)="selectSpecial(special)" [ngClass]="{
-              'bg-yellow-400 text-black font-semibold shadow-sm': special === selectedSpecial,
-              'bg-transparent text-yellow-600 hover:bg-yellow-100 hover:text-yellow-800': special !== selectedSpecial
-            }"
-          class="w-full text-center px-3 py-2 rounded-md border border-yellow-600/40 text-sm italic transition-all duration-200 cursor-pointer">
-          {{ special.title }}
-        </li>
-      </ul>
-  
-      <div *ngIf="selectedSpecial" class="md:w-3/4 bg-white rounded-lg shadow-lg p-6 flex flex-col md:flex-row items-center md:items-start gap-6">
-        <img [src]="selectedSpecial.imageUrl" [alt]="selectedSpecial.title"
-          class="w-full md:w-1/2 rounded-md object-cover max-h-64 shadow" />
-        <div>
-          <h3 class="text-2xl font-bold mb-4 italic text-yellow-600">{{ selectedSpecial.title }}</h3>
-          <p class="text-gray-400 leading-relaxed italic text-base">{{ selectedSpecial.description }}</p>
-        </div>
+    <h2 class="text-3xl sm:text-5xl font-extrabold text-gray-900 italic text-left">
+      Check Our Specials
+    </h2>
+  </div>
+
+  <div class="flex flex-col md:flex-row gap-8">
+    <ul class="md:w-1/4 space-y-2 flex flex-col items-stretch pt-6">
+      <li
+        *ngFor="let special of specials"
+        (click)="selectSpecial(special)"
+        [ngClass]="{
+          'bg-yellow-400 text-black font-semibold shadow-sm': special === selectedSpecial,
+          'bg-transparent text-yellow-600 hover:bg-yellow-100 hover:text-yellow-800': special !== selectedSpecial
+        }"
+        class="w-full text-center px-3 py-2 rounded-md border border-yellow-600/40 text-sm italic transition-all duration-200 cursor-pointer"
+      >
+        {{ special.title }}
+      </li>
+    </ul>
+
+    <div
+      *ngIf="selectedSpecial"
+      class="md:w-3/4 bg-white rounded-lg shadow-md p-4 sm:p-6 flex flex-col md:flex-row items-center md:items-start gap-6"
+    >
+      <img
+        [src]="selectedSpecial.imageUrl"
+        [alt]="selectedSpecial.title"
+        class="w-full md:w-1/2 rounded-md object-cover max-h-64 shadow"
+      />
+      <div class="text-center md:text-left">
+        <h3 class="text-2xl font-bold mb-4 italic text-yellow-600">
+          {{ selectedSpecial.title }}
+        </h3>
+        <p class="text-gray-600 leading-relaxed italic text-base">
+          {{ selectedSpecial.description }}
+        </p>
       </div>
     </div>
-  </section>
+  </div>
+</section>

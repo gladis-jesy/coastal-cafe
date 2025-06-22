@@ -7,9 +7,9 @@ import { RouterModule } from '@angular/router';
   standalone: true,
   imports: [CommonModule, RouterModule],
   templateUrl: './main-nav.component.html',
-  styleUrl: './main-nav.component.css'
+  styleUrl: './main-nav.component.css',
 })
-export class MainNavComponent implements OnInit{
+export class MainNavComponent implements OnInit {
   menuItem = [
     { label: 'Home', path: '' },
     { label: 'Menu', path: 'menu' },
@@ -19,7 +19,6 @@ export class MainNavComponent implements OnInit{
 
   menuOpen = false;
   showNavbar = true;
-
   private lastScrollTop = 0;
 
   ngOnInit() {}
@@ -27,13 +26,11 @@ export class MainNavComponent implements OnInit{
   @HostListener('window:scroll', [])
   onWindowScroll() {
     const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
-
     if (currentScroll > this.lastScrollTop && currentScroll > 50) {
       this.showNavbar = false;
     } else {
       this.showNavbar = true;
     }
-
     this.lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
   }
 

@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import {NavMenuComponent} from '../nav-menu/nav-menu.component'
 import{FooterComponent} from '../footer/footer.component';
 
 

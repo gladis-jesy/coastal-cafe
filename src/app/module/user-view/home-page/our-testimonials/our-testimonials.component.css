@@ -1,0 +1,55 @@
+.btn-bg {
+    background: rgba(83, 83, 83, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .btn-bg:hover {
+    background: rgba(255, 166, 0, 0.5);
+    color: white;
+  }
+  
+  img {
+    transition: transform 0.3s ease;
+  }
+  
+  img:hover {
+    transform: scale(1.1);
+  }
+  
+
+  .owl-dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  
+  .owl-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 9999px;
+    border: 1px solid #d1d5db; /* gray-300 */
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+  }
+  
+  .owl-dot span {
+    display: block;
+    width: 8px;
+    height: 8px;
+    border-radius: 9999px;
+    background-color: #d1d5db; 
+    transition: background-color 0.3s ease;
+  }
+  
+  .owl-dot.active span {
+    background-color: #deb074;
+  }
+  

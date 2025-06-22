@@ -1,19 +1,22 @@
+
 <nav
   [ngClass]="{
     'opacity-0 -translate-y-full': !showNavbar,
     'opacity-100 translate-y-0': showNavbar
   }"
-  class="transition-all duration-300 fixed top-0 left-0 w-full z-50 px-6 md:px-10 py-6 flex items-center justify-between bg-clr"
+  class="transition-all duration-300 fixed top-0 left-0 w-full z-50 px-6 md:px-10 py-6 flex items-center justify-between bg-clr overflow-visible"
 >
-  <!-- Logo -->
-  <div class="flex absolute md:top-8 left-1/2 transform -translate-x-1/2 
-              md:top-4 md:left-20 md:transform-none 
-              lg:top-6 lg:left-32 
-              xl:top-8 xl:left-40">
+
+  <div
+    class="absolute top-16 left-1/2 transform -translate-x-1/2
+           md:top-4 md:left-20 md:transform-none
+           lg:top-6 lg:left-32
+           xl:top-8 xl:left-40"
+  >
     <img src="cafe-logo-hd.png" class="w-20 h-20" />
   </div>
 
-  <!-- Desktop Nav -->
+  <!-- Desktop Navigation -->
   <div class="hidden md:flex gap-8 ml-auto">
     <ul class="flex gap-6">
       <li *ngFor="let menu of menuItem">
@@ -29,28 +32,24 @@
     </ul>
   </div>
 
-  <!-- Hamburger -->
-  <button class="md:hidden text-gray-800" (click)="toggleMenu()">
+  <!-- Hamburger Menu (Mobile) -->
+  <button class="md:hidden text-white z-50" (click)="toggleMenu()">
     <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
     </svg>
   </button>
 </nav>
 
-<!-- Mobile Nav -->
-<div *ngIf="menuOpen" class="md:hidden flex flex-col items-center bg-blue-100 py-4">
-  <ul class="flex flex-col gap-4">
-    <li *ngFor="let menu of menuItem">
-      <a
-        [routerLink]="menu.path"
-        routerLinkActive="text-blue-700"
-        [routerLinkActiveOptions]="{ exact: true }"
-        class="text-black hover:text-blue-700"
-        (click)="selectMenu()"
-      >
-        {{ menu.label }}
-      </a>
-    </li>
-  </ul>
-</div>
 
+<div *ngIf="menuOpen" class="md:hidden px-4 pb-4 space-y-2 bg-white-100 z-40 mt-[88px]">
+  <a *ngFor="let menu of menuItem"
+     [routerLink]="menu.path"
+     routerLinkActive="font-semibold"
+     [routerLinkActiveOptions]="{ exact: true }"
+     (click)="selectMenu()"
+     class="block text-[#deb074] hover:underline transition-colors duration-200">
+    {{ menu.label }}
+  </a>
+
+
+</div>

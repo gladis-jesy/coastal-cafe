@@ -1,0 +1,15 @@
+.double-underline {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .double-underline::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 100%;
+    height: 2px;
+    background-color: currentColor;
+    box-shadow: 0 3px 0 currentColor;
+  }

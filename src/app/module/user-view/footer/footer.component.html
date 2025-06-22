@@ -1,109 +1,111 @@
-
 <footer class="bg-black text-white w-full">
-    <div class="max-w-6xl mx-auto py-8 px-6">
-  
-  
-      <div class="flex flex-col md:flex-row md:justify-between md:space-x-12 space-y-8 md:space-y-0">
-  
-  
-        <div class="md:w-1/3 space-y-3">
-          <h4 class="text-xl  font-semibold mb-3 text-gray-400">Contact Info</h4>
-  
-          <p class="flex items-start gap-2">
-            <svg class="w-5 h-5 text-yellow-600" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round"
-                d="M12 11.25a2.25 2.25 0 100-4.5 2.25 2.25 0 000 4.5z" />
-              <path stroke-linecap="round" stroke-linejoin="round"
-                d="M19.5 10.5c0 7.125-7.5 11.25-7.5 11.25S4.5 17.625 4.5 10.5a7.5 7.5 0 1115 0z" />
-            </svg>
-            Colachel Harbour Rd, Sambasivapuram, Colachel, Tamil Nadu 629251, India
-          </p>
-  
-          <p class="flex items-center gap-2">
-            <!-- Phone Icon -->
-            <svg class="w-5 h-5 text-yellow-600" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round"
-                d="M2.25 4.5l4.615 1.538a1.5 1.5 0 011.02 1.02l.576 2.02a1.5 1.5 0 01-.282 1.38l-1.2 1.5a12 12 0 006.94 6.94l1.5-1.2a1.5 1.5 0 011.38-.282l2.02.576a1.5 1.5 0 011.02 1.02L19.5 21.75a1.5 1.5 0 01-1.44 1.05A18 18 0 013.3 5.94a1.5 1.5 0 011.05-1.44z" />
-            </svg>
-            +91 7094328125
-          </p>
-  
-          <p class="flex items-center gap-2">
-            <!-- Mail Icon -->
-            <svg class="w-5 h-5 text-yellow-600" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round"
-                d="M21.75 6.75v10.5a1.5 1.5 0 01-1.5 1.5H3.75a1.5 1.5 0 01-1.5-1.5V6.75M21.75 6.75l-9.75 6-9.75-6" />
-            </svg>
-            coastalcafe3&#64;gmail.com
-          </p>
-        </div>
-  
-    
-        <div class="md:w-1/3">
-          <h4 class="text-xl  font-semibold mb-3 text-gray-400">Quick Links</h4>
-          <ul class="flex flex-wrap gap-x-6 gap-y-4">
-            <li class="flex items-center gap-2">
-              <!-- Home Icon -->
-              <svg class="w-5 h-5 text-yellow-600" fill="none" stroke="currentColor" stroke-width="1.5"
-                viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                  d="M3 9.75L12 3l9 6.75M4.5 10.5V20a1.5 1.5 0 001.5 1.5h4.5m4.5 0h4.5a1.5 1.5 0 001.5-1.5v-9.5M9.75 21V12h4.5v9" />
-              </svg>
-              <a href="#" (click)="activeLink = 'home'; $event.preventDefault()"
-                [class.text-yellow-600]="activeLink === 'home'" class="hover:underline text-gray-400">Home</a>
-            </li>
-  
-            <li class="flex items-center gap-2">
-  
-              <svg class="w-5 h-5 text-yellow-600" fill="none" stroke="currentColor" stroke-width="1.5"
-                viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 5.25h16.5M3.75 12h16.5M3.75 18.75h16.5" />
-              </svg>
-              <a href="#" (click)="activeLink = 'menu'; $event.preventDefault()"
-                [class.text-yellow-600]="activeLink === 'menu'" class="hover:underline text-gray-400">Menu</a>
-            </li>
-  
-            <li class="flex items-center gap-2">
-  
-              <svg class="w-5 h-5 text-yellow-600" fill="none" stroke="currentColor" stroke-width="1.5"
-                viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                  d="M12 3.75a8.25 8.25 0 100 16.5 8.25 8.25 0 000-16.5z" />
-                <path stroke-linecap="round" stroke-linejoin="round"
-                  d="M12 13.5v1.5M11.25 10.5h.008v.008h-.008V10.5zm.75 0a.75.75 0 01-1.5 0 .75.75 0 011.5 0z" />
-              </svg>
-              <a href="#" (click)="activeLink = 'about'; $event.preventDefault()"
-                [class.text-yellow-600]="activeLink === 'about'" class="hover:underline text-gray-400">About Us</a>
-            </li>
-          </ul>
-        </div>
-  
-        <div class="md:w-1/3 space-y-3">
-          <h4 class="text-xl  font-semibold mb-3 text-gray-400">Coastalcafe</h4>
-  
-          <p class="flex items-center gap-2">
-  
-            <svg class="w-5 h-5 text-yellow-600" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round"
-                d="M2.25 4.5l4.615 1.538a1.5 1.5 0 011.02 1.02l.576 2.02a1.5 1.5 0 01-.282 1.38l-1.2 1.5a12 12 0 006.94 6.94l1.5-1.2a1.5 1.5 0 011.38-.282l2.02.576a1.5 1.5 0 011.02 1.02L19.5 21.75a1.5 1.5 0 01-1.44 1.05A18 18 0 013.3 5.94a1.5 1.5 0 011.05-1.44z" />
-            </svg>
-            +91 7094328125
-          </p>
-  
-          <p class="flex items-center gap-2">
-            <svg class="w-5 h-5 text-yellow-600" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round"
-                d="M9.75 17.25h4.5M4.5 9h15v3a7.5 7.5 0 01-7.5 7.5h-3A7.5 7.5 0 012.25 12V9h2.25z" />
-            </svg>
-            Coastal Cafe – Sit Calm, Sip Coffee
-          </p>
-        </div>
-  
+  <div class="max-w-6xl mx-auto py-8 px-6">
+    <div class="flex flex-col md:flex-row md:justify-between md:space-x-12 space-y-8 md:space-y-0">
+
+
+      <div class="md:w-1/3 space-y-3">
+        <h4 class="text-xl font-semibold mb-3 text-gray-400">Contact Info</h4>
+        <p class="flex items-start gap-2 text-gray-300">
+          <svg class="w-5 h-5 text-yellow-600" fill="none" stroke="currentColor" stroke-width="1.5"
+               viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M12 11.25a2.25 2.25 0 100-4.5 2.25 2.25 0 000 4.5z"/>
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M19.5 10.5c0 7.125-7.5 11.25-7.5 11.25S4.5 17.625 4.5 10.5a7.5 7.5 0 1115 0z"/>
+          </svg>
+          Colachel Harbour Rd, Sambasivapuram, Colachel, Tamil Nadu 629251, India
+        </p>
+        <p class="flex items-center gap-2 text-gray-300">
+          <svg class="w-5 h-5 text-yellow-600" fill="none" stroke="currentColor" stroke-width="1.5"
+               viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M2.25 4.5l4.615 1.538a1.5 1.5 0 011.02 1.02l.576 2.02a1.5 1.5 0 01-.282 1.38l-1.2 1.5a12 12 0 006.94 6.94l1.5-1.2a1.5 1.5 0 011.38-.282l2.02.576a1.5 1.5 0 011.02 1.02L19.5 21.75a1.5 1.5 0 01-1.44 1.05A18 18 0 013.3 5.94a1.5 1.5 0 011.05-1.44z"/>
+          </svg>
+          +91 7094328125
+        </p>
+        <p class="flex items-center gap-2 text-gray-300">
+          <svg class="w-5 h-5 text-yellow-600" fill="none" stroke="currentColor" stroke-width="1.5"
+               viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M21.75 6.75v10.5a1.5 1.5 0 01-1.5 1.5H3.75a1.5 1.5 0 01-1.5-1.5V6.75M21.75 6.75l-9.75 6-9.75-6"/>
+          </svg>
+          coastalcafe3&#64;gmail.com
+        </p>
       </div>
-  
-  
-      <div class="text-yellow-600 text-center mt-8 text-sm">
-        &copy; 2024 Coastalcafe. All rights reserved.
+
+      <div class="md:w-1/3">
+        <h4 class="text-xl font-semibold mb-3 text-gray-400">Quick Links</h4>
+        <ul class="flex flex-col gap-4">
+          <li class="flex items-center gap-2">
+            <svg class="w-5 h-5 text-yellow-600" fill="none" stroke="currentColor" stroke-width="1.5"
+                 viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M3 9.75L12 3l9 6.75M4.5 10.5V20a1.5 1.5 0 001.5 1.5h4.5m4.5 0h4.5a1.5 1.5 0 001.5-1.5v-9.5M9.75 21V12h4.5v9"/>
+            </svg>
+            <a [routerLink]="['/']"
+            routerLinkActive="text-yellow-600"
+            [routerLinkActiveOptions]="{ exact: true }"
+            class="hover:underline text-gray-300">Home</a>
+          </li>
+          <li class="flex items-center gap-2">
+            <svg class="w-5 h-5 text-yellow-600" fill="none" stroke="currentColor" stroke-width="1.5"
+                 viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M3.75 5.25h16.5M3.75 12h16.5M3.75 18.75h16.5"/>
+            </svg>
+            <a [routerLink]="['/menu']"
+       routerLinkActive="text-yellow-600"
+       class="hover:underline text-gray-300">Menu</a>
+          </li>
+          <li class="flex items-center gap-2">
+            <svg class="w-5 h-5 text-yellow-600" fill="none" stroke="currentColor" stroke-width="1.5"
+                 viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M12 3.75a8.25 8.25 0 100 16.5 8.25 8.25 0 000-16.5z"/>
+              <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M12 13.5v1.5M11.25 10.5h.008v.008h-.008V10.5zm.75 0a.75.75 0 01-1.5 0 .75.75 0 011.5 0z"/>
+            </svg>
+            <a [routerLink]="['/about-us']"
+            routerLinkActive="text-yellow-600"
+            class="hover:underline text-gray-300">About Us</a>
+          </li>
+        </ul>
+      </div>
+
+
+      <div class="md:w-1/3 space-y-3">
+        <h4 class="text-xl font-semibold mb-3 text-gray-400">Coastalcafe</h4>
+        <p class="flex items-center gap-2 text-gray-300">
+          <svg class="w-5 h-5 text-yellow-600" fill="none" stroke="currentColor" stroke-width="1.5"
+               viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M2.25 4.5l4.615 1.538a1.5 1.5 0 011.02 1.02l.576 2.02a1.5 1.5 0 01-.282 1.38l-1.2 1.5a12 12 0 006.94 6.94l1.5-1.2a1.5 1.5 0 011.38-.282l2.02.576a1.5 1.5 0 011.02 1.02L19.5 21.75a1.5 1.5 0 01-1.44 1.05A18 18 0 013.3 5.94a1.5 1.5 0 011.05-1.44z"/>
+          </svg>
+          +91 7094328125
+        </p>
+        <p class="flex items-center gap-2 text-gray-300">
+          <svg class="w-5 h-5 text-yellow-600" fill="none" stroke="currentColor" stroke-width="1.5"
+               viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M9.75 17.25h4.5M4.5 9h15v3a7.5 7.5 0 01-7.5 7.5h-3A7.5 7.5 0 012.25 12V9h2.25z"/>
+          </svg>
+          Coastal Cafe – Sit Calm, Sip Coffee
+        </p>
+
+        <!-- Instagram Link -->
+        <a href="https://www.instagram.com/YOUR_USERNAME" target="_blank" rel="noopener noreferrer"
+           class="flex items-center gap-2 text-gray-300 hover:text-yellow-600">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+            <path
+              d="M7.75 2h8.5A5.75 5.75 0 0122 7.75v8.5A5.75 5.75 0 0116.25 22h-8.5A5.75 5.75 0 012 16.25v-8.5A5.75 5.75 0 017.75 2zm0 1.5A4.25 4.25 0 003.5 7.75v8.5A4.25 4.25 0 007.75 20.5h8.5a4.25 4.25 0 004.25-4.25v-8.5A4.25 4.25 0 0016.25 3.5h-8.5zM12 7a5 5 0 110 10 5 5 0 010-10zm0 1.5a3.5 3.5 0 100 7 3.5 3.5 0 000-7zm5.25-2a1 1 0 110 2 1 1 0 010-2z"/>
+          </svg>
+          Follow us on Instagram
+        </a>
       </div>
     </div>
-  </footer>
+
+    <div class="text-yellow-600 text-center mt-8 text-sm">
+      &copy; 2024 Coastalcafe. All rights reserved.
+    </div>
+  </div>
+</footer>

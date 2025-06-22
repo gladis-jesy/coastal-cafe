@@ -44,6 +44,15 @@ export class SubNavComponent implements OnInit {
   }
 
   isMenuPage(): boolean {
-    return this.currentUrl.includes('/menu');
+    return this.currentUrl.startsWith('/menu');
   }
+  
+  isAboutPage(): boolean {
+    return this.currentUrl.startsWith('/about-us');
+  }
+  
+  isContactPage(): boolean {
+    return this.currentUrl.startsWith('/contact');
+  }
+  
 }

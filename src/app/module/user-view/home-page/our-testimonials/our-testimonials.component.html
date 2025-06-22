@@ -1,0 +1,27 @@
+<div class="relative w-full max-w-7xl mx-auto py-10 px-4">
+    <h2 class="text-3xl font-bold text-center text-yellow-600 mb-6">Our Testimonials</h2>
+  
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 transition-all duration-500">
+      <ng-container *ngFor="let testimonial of visibleTestimonials">
+        <div class="bg-white shadow-sm rounded-xl p-6 text-center hover:scale-105 transition-transform duration-300">
+            <div class="w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center bg-yellow-100 text-yellow-600 text-2xl border border-yellow-500">
+                <span class="material-symbols-outlined"></span>
+              </div>
+          <h4 class="font-semibold text-lg mb-2 text-gray-800">{{ testimonial.name }}</h4>
+          <div class="flex justify-center mb-2">
+            <span class="text-yellow-500 text-sm">★★★★★</span>
+          </div>
+          <p class="text-sm text-gray-600 italic">"{{ testimonial.feedback }}"</p>
+        </div>
+      </ng-container>
+    </div>
+  
+    <div class="flex justify-center items-center mt-6 space-x-4">
+      <button class="btn-bg px-4 py-2 text-sm" (click)="prev()">← Previous</button>
+      <button class="btn-bg px-4 py-2 text-sm" (click)="next()">Next →</button>
+    </div>
+      
+      
+      
+  </div>
+  
