@@ -41,3 +41,9 @@ testem.log
 .DS_Store
 Thumbs.db
 
+# Public assets
+public/*
+!public/Background-img.jpg
+!public/banner-img.webp
+!public/cafe-logo-hd.png
+!public/favicon.ico

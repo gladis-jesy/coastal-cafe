@@ -1,8 +1,8 @@
 .bg-clr  {
-    background: rgba(5, 5, 3, 0.1);
+    background: rgba(0, 0, 0, 0.8); /* Darker, less transparent */
     backdrop-filter: blur(60px);
+    /* Optional: Keep these if needed */
     /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); */
     /* border-radius: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-     */
-}
+    border: 1px solid rgba(255, 255, 255, 0.2); */
+  }

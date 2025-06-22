@@ -1,0 +1,31 @@
+<section class="bg-white py-16 px-4 md:px-20 max-w-7xl mx-auto">
+    <h2 class="text-4xl font-extrabold mb-12 text-gray-900 italic text-center">Our Gallery</h2>
+  
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <img *ngFor="let image of galleryImages; let i = index" [src]="image" alt="Gallery image"
+        class="w-full h-[24rem] object-cover cursor-pointer" (click)="openLightbox(i)" />
+    </div>
+  
+    <div *ngIf="lightboxOpen" class="fixed inset-0 bg-black/80 flex items-center justify-center z-50"
+      (click)="closeLightbox()">
+      <div class="relative max-w-3xl w-full px-4" (click)="$event.stopPropagation()">
+        <img [src]="galleryImages[currentIndex]" class="w-full h-auto max-h-[80vh] mx-auto rounded shadow-lg" />
+  
+  
+        <button (click)="prevImage($event)"
+          class="absolute left-4 top-1/2 -translate-y-1/2 text-white text-3xl bg-black/50 px-3 py-2 rounded-full hover:bg-black">
+          ‹
+        </button>
+  
+        <button (click)="nextImage($event)"
+          class="absolute right-4 top-1/2 -translate-y-1/2 text-white text-3xl bg-black/50 px-3 py-2 rounded-full hover:bg-black">
+          ›
+        </button>
+  
+        <button (click)="closeLightbox()"
+          class="absolute top-4 right-4 text-white text-2xl hover:bg-gray-700 px-3 py-1 rounded">
+          ✕
+        </button>
+      </div>
+    </div>
+  </section>

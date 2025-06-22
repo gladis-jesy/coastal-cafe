@@ -1,29 +1,24 @@
-import { Component,OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router, RouterModule } from '@angular/router';
+import { MainNavComponent } from './main-nav/main-nav.component';
+import { SubNavComponent } from './sub-nav/sub-nav.component';
 
 @Component({
   selector: 'app-nav',
-  imports: [CommonModule],
+  standalone: true,
+  imports: [CommonModule, RouterModule, MainNavComponent, SubNavComponent],
   templateUrl: './nav.component.html',
   styleUrl: './nav.component.css'
 })
-export class NavComponent implements OnInit{
+export class NavComponent implements OnInit {
+  isHomePage = true;
 
-  menuItem = ['Home', 'Menu', 'About Us', 'Contact'];
-  menuOpen = false;
-
-  ngOnInit(){
-
+  constructor(private router: Router) {
+    this.router.events.subscribe(() => {
+      this.isHomePage = this.router.url === '/' || this.router.url === '/home';
+    });
   }
 
-
-
-  toggleMenu() {
-    this.menuOpen = !this.menuOpen;
-  }
-
-  selectMenu() {
-    this.menuOpen = false; // Close menu after selecting an item (for mobile)
-  }
-
+  ngOnInit() {}
 }

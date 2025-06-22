@@ -1,0 +1,56 @@
+
+
+<nav class="bg-white shadow-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-20">
+        <!-- Logo -->
+        <div class="flex-shrink-0">
+          <img class="h-20 w-auto" src="colachel-cafe-final-with-slogan.png" alt="Colachel Cafe Logo">
+        </div>
+  
+        <!-- Desktop Menu -->
+        <div class="hidden md:flex space-x-6 items-center">
+          <a routerLink="/" class="text-[#deb074] hover:underline">Home</a>
+          <a routerLink="/menu" class="text-[#deb074] hover:underline">Menu</a>
+          <a routerLink="/about" class="text-[#deb074] hover:underline">About Us</a>
+          <a routerLink="/contact" class="text-[#deb074] hover:underline">Contact</a>
+        </div>
+  
+        <!-- Mobile Menu Button -->
+        <div class="md:hidden">
+          <button (click)="isMenuOpen = !isMenuOpen" class="text-[#deb074] focus:outline-none">
+            <svg *ngIf="!isMenuOpen" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+                 viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+            <svg *ngIf="isMenuOpen" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+                 viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Mobile Menu -->
+    <div *ngIf="isMenuOpen" class="md:hidden px-4 pb-4 space-y-2">
+      <a routerLink="/" class="block text-[#deb074] hover:underline">Home</a>
+      <a routerLink="/menu" class="block text-[#deb074] hover:underline">Menu</a>
+      <a routerLink="/about" class="block text-[#deb074] hover:underline">About Us</a>
+      <a routerLink="/contact" class="block text-[#deb074] hover:underline">Contact</a>
+    </div>
+  </nav>
+  
+
+  <div class="bg-black text-[#deb074] py-6">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center">
+      <h1 class="text-3xl font-bold mb-2 md:mb-0">ABOUT US</h1>
+      <div class="space-x-2 flex items-center text-md">
+        <a routerLink="/" class="hover:underline">Home</a>
+        <span>/</span>
+        <span>About Us</span>
+      </div>
+    </div>
+  </div>
