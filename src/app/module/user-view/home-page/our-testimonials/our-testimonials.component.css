@@ -50,6 +50,53 @@
   }
   
   .owl-dot.active span {
-    background-color: #deb074;
+    background-color: #f1b15e;
   }
   
+
+
+
+.glass {
+  background: rgba(235, 225, 194, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.parallax {
+  background: url('/Background-img.jpg') no-repeat center/cover;
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
+}
+
+
+
+
+.menu-img {
+  background: url('/images.png') no-repeat center/cover;
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
+}
+
+.btn-bg  {
+  background: rgba(83, 83, 83, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+
+@keyframes fade-in {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.8s ease-out both;
+}
+
+

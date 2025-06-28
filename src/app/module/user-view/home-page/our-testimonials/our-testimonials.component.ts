@@ -10,8 +10,9 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 })
 export class OurTestimonialsComponent implements OnInit, OnDestroy {
 
-  currentIndex = 0;
-  visibleTestimonials :any[]= [];
+  currentPage = 0;
+  pageSize = 3;
+  visibleTestimonials: any[] = [];
   intervalId: any;
   testimonials = [
     { name: 'Alice', feedback: 'Amazing coffee and vibe!', image: '/assets/alice.jpg' },
@@ -28,7 +29,6 @@ export class OurTestimonialsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.updateVisible();
-    // Only start auto-slide in browser environment
     if (isPlatformBrowser(this.platformId)) {
       this.autoSlide();
     }
@@ -38,28 +38,34 @@ export class OurTestimonialsComponent implements OnInit, OnDestroy {
     clearInterval(this.intervalId);
   }
 
+  get totalPages(): number {
+    return Math.ceil(this.testimonials.length / this.pageSize);
+  }
+
   updateVisible() {
-    const start = this.currentIndex;
-    const end = start + 4;
+    const start = this.currentPage * this.pageSize;
+    const end = start + this.pageSize;
     this.visibleTestimonials = this.testimonials.slice(start, end);
   }
 
   next() {
-    this.currentIndex = (this.currentIndex + 4) % this.testimonials.length;
+    this.currentPage = (this.currentPage + 1) % this.totalPages;
     this.updateVisible();
   }
 
   prev() {
-    this.currentIndex = (this.currentIndex - 4 + this.testimonials.length) % this.testimonials.length;
+    this.currentPage = (this.currentPage - 1 + this.totalPages) % this.totalPages;
     this.updateVisible();
   }
 
   autoSlide() {
     this.intervalId = setInterval(() => {
       this.next();
-    }, 5000);
+    }, 2000);
   }
 
-
-
+  goTo(index: number): void {
+    this.currentPage = index;
+    this.updateVisible();
+  }
 }
