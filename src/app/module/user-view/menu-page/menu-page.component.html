@@ -16,15 +16,16 @@
 
           <div class="flex flex-col sm:flex-row gap-4 mb-6 w-full sm:w-auto">
             <select
-              [(ngModel)]="itemsPerPage"
-              (change)="currentPage = 1"
-              class="w-full sm:w-auto bg-white border border-gray-300 text-sm text-gray-700 px-4 py-2 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition ease-in-out duration-150"
-            >
-              <option value="" disabled selected>Select items per page</option>
-              <option [ngValue]="6">Show 6</option>
-              <option [ngValue]="12">Show 12</option>
-              <option [ngValue]="filteredProducts.length">Show All</option>
-            </select>
+            [(ngModel)]="itemsPerPage"
+            (change)="currentPage = 1"
+            class="w-full sm:w-auto bg-white border border-gray-300 text-sm text-gray-700 px-4 py-2 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition ease-in-out duration-150"
+          >
+            <option [ngValue]="null" disabled>Select items per page</option>
+            <option [ngValue]="6">Show 6</option>
+            <option [ngValue]="12">Show 12</option>
+            <option [ngValue]="filteredProducts.length">Show All</option>
+          </select>
+          
           </div>     
         </div>
 

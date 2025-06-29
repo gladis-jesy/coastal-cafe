@@ -10,7 +10,7 @@
         Check Our Tasty Menu
       </h2>
 
- <!-- Category Buttons -->
+
 <div class="flex flex-wrap justify-center gap-2 sm:gap-4">
   <button *ngFor="let category of categories" 
           (click)="setActiveCategory(category)" 
@@ -31,15 +31,15 @@
       ..........................................................................................................................
     </span>
 
-    <div class="flex items-center space-x-4 bg-black pr-2 z-10 w-full sm:w-auto">
+    <div class="flex items-center space-x-4 bg-black/50 pr-2 z-10 w-full sm:w-auto">
       <img [src]="'https://coastalcafe.duckdns.org/images/' + item.image" alt="{{ item.name }}"
            class="object-cover rounded-full border border-white"
            style="width: 70px; height: 40px; border-radius: 50%; object-fit: cover;" />
-      <span class="text-sm">{{ item.name }}</span>
+      <span class="text-sm text-gray-300">{{ item.name }}</span>
     </div>
 
     <div class="flex justify-between w-full sm:w-auto items-center sm:space-x-2">
-      <span class="bg-black pl-2 z-10 text-sm">{{ item.price }}</span>
+      <span class="bg-black pl-2 z-10 text-sm  text-gray-300">{{ item.price }}</span>
     </div>
   </div>
 </div>

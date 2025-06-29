@@ -1,5 +1,7 @@
 import { Component, OnInit, OnDestroy, Inject, PLATFORM_ID } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { SharedDataService } from '../../../../shared/shared-data.service'; // adjust path as needed
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-our-testimonials',
@@ -14,21 +16,21 @@ export class OurTestimonialsComponent implements OnInit, OnDestroy {
   pageSize = 3;
   visibleTestimonials: any[] = [];
   intervalId: any;
-  testimonials = [
-    { name: 'Alice', feedback: 'Amazing coffee and vibe!', image: '/assets/alice.jpg' },
-    { name: 'Bob', feedback: 'Perfect for studying and relaxing.', image: '/assets/bob.jpg' },
-    { name: 'Charlie', feedback: 'Friendly staff and great food.', image: '/assets/charlie.jpg' },
-    { name: 'Diana', feedback: 'Love the decor and ambience!', image: '/assets/diana.jpg' },
-    { name: 'Ethan', feedback: 'Top place to chill in town.', image: '/assets/ethan.jpg' },
-    { name: 'Fiona', feedback: 'Try their mocha – it’s divine!', image: '/assets/fiona.jpg' },
-    { name: 'George', feedback: 'Cool people and cozy space.', image: '/assets/george.jpg' },
-    { name: 'Hannah', feedback: 'Highly recommend for meetings.', image: '/assets/hannah.jpg' }
-  ];
+  testimonials: any[] = [];
+  reviewSubscription!: Subscription;
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+  constructor(
+    private sharedDataService: SharedDataService,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
 
   ngOnInit() {
-    this.updateVisible();
+    this.reviewSubscription = this.sharedDataService.googleReviews$.subscribe(reviews => {
+      this.testimonials = reviews;
+      console.log('google',reviews )
+      this.updateVisible();
+    });
+
     if (isPlatformBrowser(this.platformId)) {
       this.autoSlide();
     }
@@ -36,6 +38,7 @@ export class OurTestimonialsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     clearInterval(this.intervalId);
+    this.reviewSubscription.unsubscribe();
   }
 
   get totalPages(): number {
