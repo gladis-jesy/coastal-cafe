@@ -1,86 +1,99 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common'; 
 import { FormsModule } from '@angular/forms';
-import{FooterComponent} from '../footer/footer.component'
+import { FooterComponent } from '../footer/footer.component';
+import { SharedDataService } from '../../../shared/shared-data.service';
 
 @Component({
   selector: 'app-menu-page',
   standalone: true, 
-  imports: [CommonModule,FormsModule,FooterComponent],
+  imports: [CommonModule, FormsModule, FooterComponent],
   templateUrl: './menu-page.component.html',
   styleUrls: ['./menu-page.component.css']
 })
-export class MenuPageComponent {
-  categories = [
-    'Cold Coffee', 'Desserts', 'Falooda', 'Fresh Juice', 'Hot Drinks', 'Ice Cream', 'Ice Tea', 'Lassi',
-    'Milk Shake', 'Mojito', 'Momos', 'Non Veg Burgers', 'Non Veg Fried Rice', 'Non Veg Pasta',
-    'Non Veg Sandwich', 'Non Veg Wrap', 'Noodles', 'Non Veg Noodles', 'Veg Noodles', 'Pizza',
-    'Non Veg Pizza', 'Veg Pizza', 'Shawarma', 'Snacks', 'Soup', 'Starter', 'Uncategorized',
-    'Veg Burgers', 'Veg Fried Rice', 'Veg Pasta', 'Veg Sandwich', 'Veg Wrap'
-  ];
-
-  allProducts = [
-    { name: 'Delicious Pizza', price: 120, image: 'chicken_pani_puri_shawarma.png', category: 'Non Veg Pizza' },
-    { name: 'Veg Burger', price: 80, image: 'chicken_pani_puri_shawarma.png', category: 'Veg Burgers' },
-    { name: 'Cold Coffee', price: 90, image: 'chicken_pani_puri_shawarma.png', category: 'Cold Coffee' },
-    { name: 'Ice Cream Cone', price: 60, image: 'chicken_pani_puri_shawarma.png', category: 'Ice Cream' },
-    { name: 'Veg Wrap', price: 70, image: 'chicken_pani_puri_shawarma.png', category: 'Veg Wrap' },
-    { name: 'Lassi Special', price: 50, image: 'chicken_pani_puri_shawarma.png', category: 'Lassi' }
-  ];
-
-
-  latestItems = [
-    {
-      name: 'Wireless Earbuds',
-      price: 1999,
-      image: 'kiddy_veg_burger.jpg'
-    },
-    {
-      name: 'Gaming Mouse',
-      price: 1499,
-      image: 'kiddy_veg_burger.jpg'
-    },
-    {
-      name: 'Bluetooth Speaker',
-      price: 2499,
-      image: 'kiddy_veg_burger.jpg'
-    },
-    {
-      name: 'Smart Watch',
-      price: 3999,
-      image: 'kiddy_veg_burger.jpg'
-    },
-    {
-      name: 'USB-C Charger',
-      price: 899,
-      image: 'https://example.com/images/charger.jpg'
-    },
-    {
-      name: 'Laptop Stand',
-      price: 1199,
-      image: 'https://example.com/images/stand.jpg'
-    }
-  ];
-  
-
-  products = [...this.allProducts]; // Shown products
-
+export class MenuPageComponent implements OnInit {
+  foodList: any[] = [];
+  filteredProducts: any[] = [];
+  categories: any[] = [];
+  latestItems: any[] = [];
   priceFilter = 230;
+  currentPage: number = 1;
+  itemsPerPage: number = 20;
 
-  filterByCategory(category: string) {
-    this.products = this.allProducts.filter(p => p.category === category);
+  constructor(private sharedDataService: SharedDataService) {}
+
+  ngOnInit(): void {
+    this.sharedDataService.foodData$.subscribe(data => {
+      this.foodList = data.filter(item => item?.image != null);
+      this.filteredProducts = [...this.foodList];
+ 
+      const itemsWithImages = this.foodList.filter(item => item?.image != null);
+  
+      this.latestItems = this.getRandomItems(itemsWithImages, 5).map(item => ({
+        name: item?.name,
+        price: item?.price,
+        image: item?.image
+      }));
+    });
+  
+    this.sharedDataService.categoryData$.subscribe(data => {
+      this.categories = data;
+      console.log('categories', this.categories);
+    });
+  }
+
+  getRandomItems(arr: any[], count: number): any[] {
+    const shuffled = [...arr].sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, count);
+  }
+
+  filterByCategory(categoryInput: any) {
+    const categoryArray = Array.isArray(categoryInput) ? categoryInput : [categoryInput];
+    const categoryIds = categoryArray.map(cat => cat.id);
+    this.filteredProducts = this.foodList.filter(product => categoryIds.includes(product.category));
   }
 
   showAll() {
-    this.products = [...this.allProducts];
+    this.filteredProducts = [...this.foodList];
   }
 
-  onPriceChange() {
-    // Optionally live preview price filter
-  }
+  onPriceChange() {}
 
   applyFilter() {
-    this.products = this.allProducts.filter(p => p.price <= this.priceFilter);
+    this.filteredProducts = this.foodList.filter(product => product.price <= this.priceFilter);
+    this.currentPage = 1;
   }
-}
 
+ 
+  get paginatedProducts() {
+    const start = (this.currentPage - 1) * this.itemsPerPage;
+    const end = start + this.itemsPerPage;
+    return this.filteredProducts.slice(start, end);
+  }
+
+  get totalPages(): number {
+    return Math.ceil(this.filteredProducts.length / this.itemsPerPage);
+  }
+
+  get visiblePageNumbers(): number[] {
+    const pagesToShow = 7;
+    const pages: number[] = [];
+    const half = Math.floor(pagesToShow / 2);
+  
+    let start = Math.max(this.currentPage - half, 1);
+    let end = start + pagesToShow - 1;
+  
+    if (end > this.totalPages) {
+      end = this.totalPages;
+      start = Math.max(end - pagesToShow + 1, 1);
+    }
+  
+    for (let i = start; i <= end; i++) {
+      pages.push(i);
+    }
+  
+    return pages;
+  }
+  
+  
+}
