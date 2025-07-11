@@ -17,9 +17,9 @@ export class SharedDataService {
 
   loadInitialData(): void {
     forkJoin([
-      this.apiService.get<any>('https://coastalcafe.duckdns.org/api/foods/?all=true'),
-      this.apiService.get<any>('https://coastalcafe.duckdns.org/api/food-categories/?all=true'),
-      this.apiService.get<any>('https://coastalcafe.duckdns.org/api/google-reviews/?all=true')
+      this.apiService.get<any>('https://coastalcafe.in/api/foods/?all=true'),
+      this.apiService.get<any>('https://coastalcafe.in/api/food-categories/?all=true'),
+      this.apiService.get<any>('https://coastalcafe.in/api/google-reviews/?all=true')
     ]).subscribe({
       next: ([foodsResponse, categoriesResponse, reviewsResponse]) => {
         const foods = Array.isArray(foodsResponse) ? foodsResponse : foodsResponse.results || [];
