@@ -16,7 +16,6 @@ export class SharedDataService {
   constructor(private apiService: ApiService) {}
 
   loadInitialData(): void {
-    console.log('Calling loadInitialData...');
     forkJoin([
       this.apiService.get<any>('https://coastalcafe.duckdns.org/api/foods/?all=true'),
       this.apiService.get<any>('https://coastalcafe.duckdns.org/api/food-categories/?all=true'),

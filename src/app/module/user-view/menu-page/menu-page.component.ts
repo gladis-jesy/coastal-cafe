@@ -38,7 +38,6 @@ export class MenuPageComponent implements OnInit {
   
     this.sharedDataService.categoryData$.subscribe(data => {
       this.categories = data;
-      console.log('categories', this.categories);
     });
   }
 

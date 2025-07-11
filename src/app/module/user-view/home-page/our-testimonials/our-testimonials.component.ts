@@ -27,7 +27,6 @@ export class OurTestimonialsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.reviewSubscription = this.sharedDataService.googleReviews$.subscribe(reviews => {
       this.testimonials = reviews;
-      console.log('google',reviews )
       this.updateVisible();
     });
 
