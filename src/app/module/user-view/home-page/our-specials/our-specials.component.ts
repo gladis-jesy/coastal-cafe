@@ -20,7 +20,6 @@ export class OurSpecialsComponent implements OnInit {
 
   ngOnInit(): void {
 
-    // this.sharedDataService.loadInitialData();
     this.dataSubscription = this.sharedDataService.foodData$.subscribe((foods) => {
       const specialFoods = foods.filter(food => food.special === true);
 

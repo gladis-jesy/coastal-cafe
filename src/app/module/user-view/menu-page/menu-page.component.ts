@@ -93,6 +93,12 @@ export class MenuPageComponent implements OnInit {
   
     return pages;
   }
-  
+
+
+  onItemsPerPageChange(event: Event): void {
+    const selectedValue = (event.target as HTMLSelectElement).value;
+    this.itemsPerPage = parseInt(selectedValue, 10);
+    this.currentPage = 1;
+  }
   
 }

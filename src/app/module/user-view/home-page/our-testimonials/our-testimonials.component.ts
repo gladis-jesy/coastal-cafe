@@ -18,7 +18,7 @@ export class OurTestimonialsComponent implements OnInit, OnDestroy {
   intervalId: any;
   testimonials: any[] = [];
   reviewSubscription!: Subscription;
-
+  expandedIndexes: Set<number> = new Set();
   constructor(
     private sharedDataService: SharedDataService,
     @Inject(PLATFORM_ID) private platformId: Object
@@ -70,4 +70,13 @@ export class OurTestimonialsComponent implements OnInit, OnDestroy {
     this.currentPage = index;
     this.updateVisible();
   }
+
+  toggleExpand(index: number): void {
+    if (this.expandedIndexes.has(index)) {
+      this.expandedIndexes.delete(index);
+    } else {
+      this.expandedIndexes.add(index);
+    }
+  }
+
 }
