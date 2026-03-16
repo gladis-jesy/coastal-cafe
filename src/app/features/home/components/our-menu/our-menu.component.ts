@@ -1,7 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SharedDataService } from '../../../../core/services/shared-data.service';
-import { Subscription ,combineLatest} from 'rxjs';
+import { Food, Category } from '../../../../core/models/interfaces';
+import { Subscription, combineLatest } from 'rxjs';
 
 @Component({
   selector: 'app-our-menu',
@@ -11,9 +12,9 @@ import { Subscription ,combineLatest} from 'rxjs';
   styleUrl: './our-menu.component.css'
 })
 export class OurMenuComponent implements OnInit, OnDestroy {
-  activeCategory = '';
-  categories: any[] = [];
-  menuItemsByCategory: { [key: string]: any[] } = {};
+  activeCategory: number = 0;
+  categories: Category[] = [];
+  menuItemsByCategory: { [key: number]: Food[] } = {};
 
   private subscription = new Subscription();
 
@@ -46,7 +47,7 @@ export class OurMenuComponent implements OnInit, OnDestroy {
     this.subscription.add(combinedSub);
   }
 
-  setActiveCategory(category: any): void {
+  setActiveCategory(category: Category): void {
     this.activeCategory = category.id;
   }
 

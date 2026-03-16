@@ -1,14 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-
-export interface CartItem {
-  id: number;
-  name: string;
-  price: number;
-  image: string;
-  quantity: number;
-}
+import { CartItem, Food } from '../models/interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +21,7 @@ export class CartService {
     map(items => items.reduce((sum, item) => sum + item.price * item.quantity, 0))
   );
 
-  addToCart(product: any): void {
+  addToCart(product: Food): void {
     const current = this.cartItemsSubject.getValue();
     const existing = current.find(item => item.id === product.id);
     if (existing) {

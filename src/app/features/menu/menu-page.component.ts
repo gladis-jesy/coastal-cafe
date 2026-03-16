@@ -6,6 +6,7 @@ import { FooterComponent } from '../../shared/components/footer/footer.component
 import { SharedDataService } from '../../core/services/shared-data.service';
 import { SearchService } from '../../core/services/search.service';
 import { CartService } from '../../core/services/cart.service';
+import { Food, Category } from '../../core/models/interfaces';
 
 @Component({
   selector: 'app-menu-page',
@@ -15,10 +16,10 @@ import { CartService } from '../../core/services/cart.service';
   styleUrls: ['./menu-page.component.css']
 })
 export class MenuPageComponent implements OnInit, OnDestroy {
-  foodList: any[] = [];
-  filteredProducts: any[] = [];
-  categories: any[] = [];
-  latestItems: any[] = [];
+  foodList: Food[] = [];
+  filteredProducts: Food[] = [];
+  categories: Category[] = [];
+  latestItems: Pick<Food, 'name' | 'price' | 'image'>[] = [];
   priceFilter = 230;
   currentPage: number = 1;
   itemsPerPage: number = 20;
@@ -64,9 +65,9 @@ export class MenuPageComponent implements OnInit, OnDestroy {
     return shuffled.slice(0, count);
   }
 
-  filterByCategory(categoryInput: any) {
+  filterByCategory(categoryInput: Category | Category[]) {
     const categoryArray = Array.isArray(categoryInput) ? categoryInput : [categoryInput];
-    const categoryIds = categoryArray.map((cat: any) => cat.id);
+    const categoryIds = categoryArray.map(cat => cat.id);
     this.filteredProducts = this.foodList.filter(product => categoryIds.includes(product.category));
     this.currentPage = 1;
   }
@@ -83,7 +84,7 @@ export class MenuPageComponent implements OnInit, OnDestroy {
     this.currentPage = 1;
   }
 
-  addToCart(product: any): void {
+  addToCart(product: Food): void {
     this.cartService.addToCart(product);
     this.cartService.openCart();
     this.addedItemIds.add(product.id);

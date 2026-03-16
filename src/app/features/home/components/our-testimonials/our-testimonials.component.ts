@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy, Inject, PLATFORM_ID } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { SharedDataService } from '../../../../core/services/shared-data.service';
+import { Review } from '../../../../core/models/interfaces';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -14,9 +15,9 @@ export class OurTestimonialsComponent implements OnInit, OnDestroy {
 
   currentPage = 0;
   pageSize = 3;
-  visibleTestimonials: any[] = [];
+  visibleTestimonials: Review[] = [];
   intervalId: any;
-  testimonials: any[] = [];
+  testimonials: Review[] = [];
   reviewSubscription!: Subscription;
   expandedIndexes: Set<number> = new Set();
   constructor(

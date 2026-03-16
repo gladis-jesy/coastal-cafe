@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { SharedDataService } from './shared-data.service';
+import { Food } from '../models/interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class SearchService {
 
   searchQuery$: Observable<string> = this.searchQuerySubject.asObservable();
 
-  filteredFoods$: Observable<any[]>;
+  filteredFoods$: Observable<Food[]>;
 
   constructor(private sharedDataService: SharedDataService) {
     this.filteredFoods$ = combineLatest([
@@ -19,12 +20,12 @@ export class SearchService {
       this.searchQuery$.pipe(debounceTime(300), distinctUntilChanged())
     ]).pipe(
       map(([foods, query]) => {
-        const items = foods.filter(item => item?.image != null);
+        const items = foods.filter(item => item.image != null);
         if (!query.trim()) return items;
         const lower = query.toLowerCase();
         return items.filter(food =>
-          food?.name?.toLowerCase().includes(lower) ||
-          food?.description?.toLowerCase().includes(lower)
+          food.name.toLowerCase().includes(lower) ||
+          food.description?.toLowerCase().includes(lower)
         );
       })
     );

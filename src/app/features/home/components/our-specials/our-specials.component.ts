@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SharedDataService } from '../../../../core/services/shared-data.service';
+import { Food } from '../../../../core/models/interfaces';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -12,8 +13,8 @@ import { Subscription } from 'rxjs';
 })
 export class OurSpecialsComponent implements OnInit {
 
-  specials: any[] = [];
-  selectedSpecial: any;
+  specials: Food[] = [];
+  selectedSpecial: Food | null = null;
   private dataSubscription: Subscription = new Subscription();
 
   constructor(private sharedDataService: SharedDataService) {}
@@ -28,7 +29,7 @@ export class OurSpecialsComponent implements OnInit {
     });
   }
 
-  selectSpecial(special: any): void {
+  selectSpecial(special: Food): void {
     this.selectedSpecial = special;
   }
 
