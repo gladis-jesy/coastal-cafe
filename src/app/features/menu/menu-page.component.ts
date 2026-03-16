@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { FooterComponent } from '../../shared/components/footer/footer.component';
 import { SharedDataService } from '../../core/services/shared-data.service';
 import { SearchService } from '../../core/services/search.service';
+import { CartService } from '../../core/services/cart.service';
 
 @Component({
   selector: 'app-menu-page',
@@ -21,12 +22,14 @@ export class MenuPageComponent implements OnInit, OnDestroy {
   priceFilter = 230;
   currentPage: number = 1;
   itemsPerPage: number = 20;
+  addedItemIds = new Set<number>();
 
   private subscriptions = new Subscription();
 
   constructor(
     private sharedDataService: SharedDataService,
-    private searchService: SearchService
+    private searchService: SearchService,
+    private cartService: CartService
   ) {}
 
   ngOnInit(): void {
@@ -78,6 +81,17 @@ export class MenuPageComponent implements OnInit, OnDestroy {
   applyFilter() {
     this.filteredProducts = this.foodList.filter(product => product.price <= this.priceFilter);
     this.currentPage = 1;
+  }
+
+  addToCart(product: any): void {
+    this.cartService.addToCart(product);
+    this.cartService.openCart();
+    this.addedItemIds.add(product.id);
+    setTimeout(() => this.addedItemIds.delete(product.id), 1500);
+  }
+
+  isAdded(productId: number): boolean {
+    return this.addedItemIds.has(productId);
   }
 
   get paginatedProducts() {

@@ -3,7 +3,9 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, NavigationEnd, RouterModule } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { SearchService } from '../../../../core/services/search.service';
+import { CartService } from '../../../../core/services/cart.service';
 
 @Component({
   selector: 'app-sub-nav',
@@ -18,6 +20,7 @@ export class SubNavComponent implements OnInit {
   private lastScrollTop = 0;
   currentUrl = '';
   searchQuery = '';
+  cartCount$: Observable<number>;
 
   menuItem = [
     { label: 'Home', path: '' },
@@ -26,7 +29,13 @@ export class SubNavComponent implements OnInit {
     { label: 'Contact', path: 'contact' }
   ];
 
-  constructor(private router: Router, private searchService: SearchService) {}
+  constructor(
+    private router: Router,
+    private searchService: SearchService,
+    private cartService: CartService
+  ) {
+    this.cartCount$ = this.cartService.cartCount$;
+  }
 
   ngOnInit(): void {
     this.currentUrl = this.router.url;
@@ -39,6 +48,10 @@ export class SubNavComponent implements OnInit {
           this.searchService.clearSearch();
         }
       });
+  }
+
+  toggleCart(): void {
+    this.cartService.toggleCart();
   }
 
   onSearchInput(): void {
