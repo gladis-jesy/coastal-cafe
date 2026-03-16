@@ -37,6 +37,10 @@ export class CartSidebarComponent {
     this.cartService.closeCart();
   }
 
+  confirm_order(){
+    this.cartService.closeCart();
+  }
+
   clearAll(): void {
     this.cartService.clearCart();
   }

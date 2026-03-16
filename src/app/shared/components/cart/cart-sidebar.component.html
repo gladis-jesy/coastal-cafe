@@ -56,8 +56,8 @@
         <span>Total</span>
         <span class="text-yellow-600">₹{{ cartTotal$ | async }}</span>
       </div>
-      <button class="w-full bg-yellow-600 hover:bg-yellow-700 text-white font-semibold py-2.5 rounded-lg transition">
-        Place Order
+      <button (click) = "confirm_order()" class="w-full bg-yellow-600 hover:bg-yellow-700 text-white font-semibold py-2.5 rounded-lg transition">
+        Confirm Order
       </button>
       <button (click)="clearAll()" class="w-full text-sm text-gray-400 hover:text-red-500 transition text-center">
         Clear cart
