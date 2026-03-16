@@ -1,12 +1,14 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { Router, NavigationEnd, RouterModule } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { SearchService } from '../../../../core/services/search.service';
 
 @Component({
   selector: 'app-sub-nav',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, FormsModule],
   templateUrl: './sub-nav.component.html',
   styleUrl: './sub-nav.component.css'
 })
@@ -15,6 +17,7 @@ export class SubNavComponent implements OnInit {
   showNavbar = true;
   private lastScrollTop = 0;
   currentUrl = '';
+  searchQuery = '';
 
   menuItem = [
     { label: 'Home', path: '' },
@@ -23,16 +26,26 @@ export class SubNavComponent implements OnInit {
     { label: 'Contact', path: 'contact' }
   ];
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private searchService: SearchService) {}
 
   ngOnInit(): void {
     this.currentUrl = this.router.url;
 
-    // Update URL on route change
     this.router.events.pipe(filter(event => event instanceof NavigationEnd))
       .subscribe((event: any) => {
         this.currentUrl = event.url;
+        if (!event.url.startsWith('/menu')) {
+          this.searchQuery = '';
+          this.searchService.clearSearch();
+        }
       });
+  }
+
+  onSearchInput(): void {
+    this.searchService.setQuery(this.searchQuery);
+    if (this.searchQuery.trim() && !this.currentUrl.startsWith('/menu')) {
+      this.router.navigate(['/menu']);
+    }
   }
 
   toggleMenu(): void {
@@ -46,13 +59,19 @@ export class SubNavComponent implements OnInit {
   isMenuPage(): boolean {
     return this.currentUrl.startsWith('/menu');
   }
-  
+
   isAboutPage(): boolean {
     return this.currentUrl.startsWith('/about-us');
   }
-  
+
   isContactPage(): boolean {
     return this.currentUrl.startsWith('/contact');
   }
-  
+
+  @HostListener('window:scroll')
+  onScroll(): void {
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    this.showNavbar = scrollTop <= this.lastScrollTop || scrollTop < 80;
+    this.lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+  }
 }
