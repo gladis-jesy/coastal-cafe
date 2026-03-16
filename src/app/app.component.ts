@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { NavComponent } from './module/user-view/nav/nav.component'; // ✅ Add this
+import { NavComponent } from './shared/components/nav/nav.component';
 import { CommonModule } from '@angular/common';
-import {SharedDataService} from './shared/shared-data.service'
+import { SharedDataService } from './core/services/shared-data.service'
 
 @Component({
   selector: 'app-root',

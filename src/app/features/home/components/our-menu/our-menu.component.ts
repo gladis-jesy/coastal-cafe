@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SharedDataService } from '../../../../shared/shared-data.service';
+import { SharedDataService } from '../../../../core/services/shared-data.service';
 import { Subscription ,combineLatest} from 'rxjs';
 
 @Component({

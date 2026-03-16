@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SharedDataService } from '../../../../shared/shared-data.service'; // Update path as per your structure
+import { SharedDataService } from '../../../../core/services/shared-data.service';
 import { Subscription } from 'rxjs';
 
 @Component({

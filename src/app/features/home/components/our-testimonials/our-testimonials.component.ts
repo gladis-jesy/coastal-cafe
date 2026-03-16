@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, Inject, PLATFORM_ID } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { SharedDataService } from '../../../../shared/shared-data.service'; // adjust path as needed
+import { SharedDataService } from '../../../../core/services/shared-data.service';
 import { Subscription } from 'rxjs';
 
 @Component({

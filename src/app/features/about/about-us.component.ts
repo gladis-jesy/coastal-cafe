@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { FooterComponent } from '../footer/footer.component';
-import { OurTestimonialsComponent } from '../../user-view/home-page/our-testimonials/our-testimonials.component';
+import { FooterComponent } from '../../shared/components/footer/footer.component';
+import { OurTestimonialsComponent } from '../home/components/our-testimonials/our-testimonials.component';
 
 @Component({
   selector: 'app-about-us',

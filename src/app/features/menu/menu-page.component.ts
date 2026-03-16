@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common'; 
 import { FormsModule } from '@angular/forms';
-import { FooterComponent } from '../footer/footer.component';
-import { SharedDataService } from '../../../shared/shared-data.service';
+import { FooterComponent } from '../../shared/components/footer/footer.component';
+import { SharedDataService } from '../../core/services/shared-data.service';
 
 @Component({
   selector: 'app-menu-page',
