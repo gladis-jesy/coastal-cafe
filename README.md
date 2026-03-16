@@ -1,59 +1,119 @@
-# CoastalCafe
+# Coastal Cafe
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.1.
+Official website for **Coastal Cafe** — a modern, full-featured cafe web app built with Angular 19.
 
-## Development server
+Live site: [https://coastalcafe.in](https://coastalcafe.in)
 
-To start a local development server, run:
+---
 
-```bash
-ng serve
+## Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Framework | Angular 19 (standalone components) |
+| Language | TypeScript 5.7 |
+| Styling | Tailwind CSS 4.0 |
+| Rendering | Angular SSR (Server-Side Rendering) |
+| Reactive | RxJS 7.8 |
+| SSR Server | Express 4.18 |
+| UI Components | Swiper, ngx-slick-carousel |
+
+---
+
+## Features
+
+- **Home page** — Hero section, Our Menu, Specials, Gallery, Testimonials
+- **Menu page** — Full food listing with category filter, price range filter, search, and pagination
+- **Shopping cart** — Slide-in cart sidebar with quantity controls and order confirmation
+- **Live search** — Real-time search with debounce, navigates to menu page automatically
+- **About Us & Contact** pages
+- **Responsive** — Mobile-first design with hamburger nav
+
+---
+
+## Project Structure
+
+```
+src/app/
+├── core/
+│   ├── models/         # TypeScript interfaces (Food, Category, CartItem, Review)
+│   └── services/
+│       ├── api.service.ts          # Generic HTTP wrapper
+│       ├── food.service.ts         # Food data fetching
+│       ├── cart.service.ts         # Cart state management
+│       ├── search.service.ts       # Real-time search with debounce
+│       └── shared-data.service.ts  # App-wide data loader (foods, categories, reviews)
+├── features/
+│   ├── home/           # Landing page and its sub-components
+│   ├── menu/           # Menu page with filters and pagination
+│   ├── about/          # About Us page
+│   └── contact/        # Contact page
+└── shared/
+    └── components/
+        ├── nav/        # Main nav, sub-nav, nav switcher
+        ├── cart/       # Cart sidebar
+        └── footer/     # Footer
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+---
 
-## Code scaffolding
+## Getting Started
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+### Prerequisites
 
-```bash
-ng generate component component-name
-```
+- Node.js >= 18
+- npm >= 9
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
+### Install dependencies
 
 ```bash
-ng build
+npm install
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+### Development server
 
 ```bash
-ng test
+npm start
 ```
 
-## Running end-to-end tests
+Navigate to `http://localhost:4200`. The app reloads automatically on file changes.
 
-For end-to-end (e2e) testing, run:
+### Build for production
 
 ```bash
-ng e2e
+npm run build
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+Output is in the `dist/` directory.
 
-## Additional Resources
+### Serve with SSR
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+```bash
+npm run serve:ssr:coastal-cafe
+```
+
+---
+
+## Available Scripts
+
+| Command | Description |
+|---|---|
+| `npm start` | Start dev server at localhost:4200 |
+| `npm run build` | Production build |
+| `npm run watch` | Build in watch mode |
+| `npm test` | Run unit tests with Karma |
+| `npm run lint` | Run ESLint |
+| `npm run serve:ssr:coastal-cafe` | Serve with Server-Side Rendering |
+
+---
+
+## Environment
+
+API base URL is configured in `src/environment/environment.ts`:
+
+```ts
+export const environment = {
+  production: true,
+  apiBaseUrl: 'https://coastalcafe.in/api'
+};
+```
