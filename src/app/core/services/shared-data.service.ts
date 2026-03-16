@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { forkJoin, BehaviorSubject } from 'rxjs';
 import { ApiService } from './api.service';
 import { Food, Category, Review, ApiResponse } from '../models/interfaces';
@@ -7,6 +7,8 @@ import { Food, Category, Review, ApiResponse } from '../models/interfaces';
   providedIn: 'root'
 })
 export class SharedDataService {
+  private apiService = inject(ApiService);
+
 
   private foodDataSubject = new BehaviorSubject<Food[]>([]);
   private categoryDataSubject = new BehaviorSubject<Category[]>([]);
@@ -15,8 +17,6 @@ export class SharedDataService {
   public foodData$ = this.foodDataSubject.asObservable();
   public categoryData$ = this.categoryDataSubject.asObservable();
   public googleReviews$ = this.googleReviewsSubject.asObservable();
-
-  constructor(private apiService: ApiService) {}
 
   loadInitialData(): void {
     forkJoin([

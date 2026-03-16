@@ -11,7 +11,9 @@
   </div>
 
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-12">
-    <div *ngFor="let special of specials" (click)="selectSpecial(special)" [ngClass]="{
+    <div *ngFor="let special of specials" role="button" tabindex="0"
+      (click)="selectSpecial(special)" (keydown.enter)="selectSpecial(special)" (keydown.space)="selectSpecial(special)"
+      [ngClass]="{
       'ring-2 ring-yellow-400': special === selectedSpecial
     }" class="relative bg-white/30 backdrop-blur-md border border-gray-200 rounded-xl shadow-lg pt-16 pb-4 px-4 cursor-pointer transition-all hover:scale-105 duration-300
            w-full max-w-xs sm:max-w-none mx-auto">

@@ -15,8 +15,8 @@ export class OurGalleryComponent {
     'cafe-pic-4.jpg'
   ];
   
-  lightboxOpen: boolean = false;
-  currentIndex: number = 0;
+  lightboxOpen = false;
+  currentIndex = 0;
   
   openLightbox(index: number): void {
     this.currentIndex = index;

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, OnInit, OnDestroy, PLATFORM_ID, inject } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { SharedDataService } from '../../../../core/services/shared-data.service';
 import { Review } from '../../../../core/models/interfaces';
@@ -12,18 +12,17 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./our-testimonials.component.css']
 })
 export class OurTestimonialsComponent implements OnInit, OnDestroy {
+  private sharedDataService = inject(SharedDataService);
+  private platformId = inject(PLATFORM_ID);
+
 
   currentPage = 0;
   pageSize = 3;
   visibleTestimonials: Review[] = [];
-  intervalId: any;
+  intervalId: ReturnType<typeof setInterval> | undefined;
   testimonials: Review[] = [];
   reviewSubscription!: Subscription;
-  expandedIndexes: Set<number> = new Set();
-  constructor(
-    private sharedDataService: SharedDataService,
-    @Inject(PLATFORM_ID) private platformId: Object
-  ) {}
+  expandedIndexes = new Set<number>();
 
   ngOnInit() {
     this.reviewSubscription = this.sharedDataService.googleReviews$.subscribe(reviews => {

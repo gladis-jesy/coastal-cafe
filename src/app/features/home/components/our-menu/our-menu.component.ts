@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SharedDataService } from '../../../../core/services/shared-data.service';
 import { Food, Category } from '../../../../core/models/interfaces';
@@ -12,20 +12,20 @@ import { Subscription, combineLatest } from 'rxjs';
   styleUrl: './our-menu.component.css'
 })
 export class OurMenuComponent implements OnInit, OnDestroy {
-  activeCategory: number = 0;
+  private sharedDataService = inject(SharedDataService);
+
+  activeCategory = 0;
   categories: Category[] = [];
-  menuItemsByCategory: { [key: number]: Food[] } = {};
+  menuItemsByCategory: Record<number, Food[]> = {};
 
   private subscription = new Subscription();
-
-  constructor(private sharedDataService: SharedDataService) {}
 
   ngOnInit(): void {
     const combinedSub = combineLatest([
       this.sharedDataService.categoryData$,
       this.sharedDataService.foodData$
     ]).subscribe(([categories, foods]) => {
-      const categoryMap: { [key: number]: any[] } = {};
+      const categoryMap: Record<number, Food[]> = {};
   
       for (const item of foods) {
         if (item.category != null && item.image != null) {

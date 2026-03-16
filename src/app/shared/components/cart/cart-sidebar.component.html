@@ -1,6 +1,6 @@
 <ng-container *ngIf="isOpen$ | async">
   <!-- Backdrop -->
-  <div class="fixed inset-0 bg-black/50 z-40" (click)="close()"></div>
+  <div class="fixed inset-0 bg-black/50 z-40" tabindex="0" aria-label="Close cart" (click)="close()" (keydown.escape)="close()"></div>
 
   <!-- Sidebar -->
   <div class="fixed top-0 right-0 h-full w-80 bg-white z-50 shadow-2xl flex flex-col">

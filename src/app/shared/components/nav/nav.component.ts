@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { MainNavComponent } from './main-nav/main-nav.component';
@@ -12,9 +12,11 @@ import { SubNavComponent } from './sub-nav/sub-nav.component';
   styleUrl: './nav.component.css'
 })
 export class NavComponent implements OnInit {
+  private router = inject(Router);
+
   isHomePage = true;
 
-  constructor(private router: Router) {
+  constructor() {
     this.router.events.subscribe(() => {
       this.isHomePage = this.router.url === '/' || this.router.url === '/home';
     });

@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, NavigationEnd, RouterModule } from '@angular/router';
@@ -15,6 +15,10 @@ import { CartService } from '../../../../core/services/cart.service';
   styleUrl: './sub-nav.component.css'
 })
 export class SubNavComponent implements OnInit {
+  private router = inject(Router);
+  private searchService = inject(SearchService);
+  private cartService = inject(CartService);
+
   isMenuOpen = false;
   showNavbar = true;
   private lastScrollTop = 0;
@@ -29,11 +33,7 @@ export class SubNavComponent implements OnInit {
     { label: 'Contact', path: 'contact' }
   ];
 
-  constructor(
-    private router: Router,
-    private searchService: SearchService,
-    private cartService: CartService
-  ) {
+  constructor() {
     this.cartCount$ = this.cartService.cartCount$;
   }
 
@@ -41,7 +41,7 @@ export class SubNavComponent implements OnInit {
     this.currentUrl = this.router.url;
 
     this.router.events.pipe(filter(event => event instanceof NavigationEnd))
-      .subscribe((event: any) => {
+      .subscribe((event: NavigationEnd) => {
         this.currentUrl = event.url;
         if (!event.url.startsWith('/menu')) {
           this.searchQuery = '';

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SharedDataService } from '../../../../core/services/shared-data.service';
 import { Food } from '../../../../core/models/interfaces';
@@ -11,13 +11,13 @@ import { Subscription } from 'rxjs';
   templateUrl: './our-specials.component.html',
   styleUrl: './our-specials.component.css'
 })
-export class OurSpecialsComponent implements OnInit {
+export class OurSpecialsComponent implements OnInit, OnDestroy {
+  private sharedDataService = inject(SharedDataService);
+
 
   specials: Food[] = [];
   selectedSpecial: Food | null = null;
   private dataSubscription: Subscription = new Subscription();
-
-  constructor(private sharedDataService: SharedDataService) {}
 
   ngOnInit(): void {
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
@@ -16,22 +16,20 @@ import { Food, Category } from '../../core/models/interfaces';
   styleUrls: ['./menu-page.component.css']
 })
 export class MenuPageComponent implements OnInit, OnDestroy {
+  private sharedDataService = inject(SharedDataService);
+  private searchService = inject(SearchService);
+  private cartService = inject(CartService);
+
   foodList: Food[] = [];
   filteredProducts: Food[] = [];
   categories: Category[] = [];
   latestItems: Pick<Food, 'name' | 'price' | 'image'>[] = [];
   priceFilter = 230;
-  currentPage: number = 1;
-  itemsPerPage: number = 20;
+  currentPage = 1;
+  itemsPerPage = 20;
   addedItemIds = new Set<number>();
 
   private subscriptions = new Subscription();
-
-  constructor(
-    private sharedDataService: SharedDataService,
-    private searchService: SearchService,
-    private cartService: CartService
-  ) {}
 
   ngOnInit(): void {
     this.subscriptions.add(
@@ -60,7 +58,7 @@ export class MenuPageComponent implements OnInit, OnDestroy {
     this.subscriptions.unsubscribe();
   }
 
-  getRandomItems(arr: any[], count: number): any[] {
+  getRandomItems(arr: Food[], count: number): Food[] {
     const shuffled = [...arr].sort(() => 0.5 - Math.random());
     return shuffled.slice(0, count);
   }

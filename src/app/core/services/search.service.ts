@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { SharedDataService } from './shared-data.service';
@@ -8,13 +8,15 @@ import { Food } from '../models/interfaces';
   providedIn: 'root'
 })
 export class SearchService {
+  private sharedDataService = inject(SharedDataService);
+
   private searchQuerySubject = new BehaviorSubject<string>('');
 
   searchQuery$: Observable<string> = this.searchQuerySubject.asObservable();
 
   filteredFoods$: Observable<Food[]>;
 
-  constructor(private sharedDataService: SharedDataService) {
+  constructor() {
     this.filteredFoods$ = combineLatest([
       this.sharedDataService.foodData$,
       this.searchQuery$.pipe(debounceTime(300), distinctUntilChanged())

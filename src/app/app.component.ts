@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { NavComponent } from './shared/components/nav/nav.component';
 import { CommonModule } from '@angular/common';
@@ -17,9 +17,9 @@ import { CartSidebarComponent } from './shared/components/cart/cart-sidebar.comp
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent implements OnInit { 
+export class AppComponent implements OnInit {
+  private sharedDataService = inject(SharedDataService);
 
-  constructor(private sharedDataService: SharedDataService) {}
 
   ngOnInit(): void {
     this.sharedDataService.loadInitialData();
