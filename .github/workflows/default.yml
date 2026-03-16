@@ -1,0 +1,25 @@
+name : default
+on:
+    push:
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            # 1. Get a copy of your code
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            # 2. Install Node.js (Use the version your project needs)
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                node-version: '20'
+                cache: 'npm'
+
+            # 3. Install project's dependencies
+            - name: Install dependencies
+              run: npm ci
+
+            # 4. Run the Angular build
+            - name: Build Angular Project
+              run: npm run build -- --configuration production
