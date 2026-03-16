@@ -8,13 +8,13 @@
 >
 
 <div
-class="top-4 right-4 absolute 
-       md:top-4 md:left-20 md:transform-none 
-       md:right-auto md:absolute 
-       lg:top-6 lg:left-32 
-       xl:top-8 xl:left-40 
-       transform md:transform-none 
-       md:translate-x-0 
+class="top-4 right-4 absolute
+       md:top-4 md:left-20 md:transform-none
+       md:right-auto md:absolute
+       lg:top-6 lg:left-32
+       xl:top-8 xl:left-40
+       transform md:transform-none
+       md:translate-x-0
        translate-x-0"
 >
 <img src="cafe-logo.webp" alt="Coastal Cafe logo" class="w-12 h-12 md:w-20 md:h-20" />
@@ -23,16 +23,18 @@ class="top-4 right-4 absolute
 
   <div class="hidden md:flex gap-8 ml-auto">
     <ul class="flex gap-6">
-      <li *ngFor="let menu of menuItem">
-        <a
-          [routerLink]="menu.path"
-          routerLinkActive="text-yellow-500"
-          [routerLinkActiveOptions]="{ exact: true }"
-          class="text-white hover:text-yellow-500 cursor-pointer transition-colors duration-200"
-        >
-          {{ menu.label }}
-        </a>
-      </li>
+      @for (menu of menuItem; track menu.path) {
+        <li>
+          <a
+            [routerLink]="menu.path"
+            routerLinkActive="text-yellow-500"
+            [routerLinkActiveOptions]="{ exact: true }"
+            class="text-white hover:text-yellow-500 cursor-pointer transition-colors duration-200"
+          >
+            {{ menu.label }}
+          </a>
+        </li>
+      }
     </ul>
   </div>
 
@@ -45,15 +47,17 @@ class="top-4 right-4 absolute
 </nav>
 
 
-<div *ngIf="menuOpen" class="md:hidden px-4 pb-4 space-y-2 bg-white-100 z-40 mt-[88px]">
-  <a *ngFor="let menu of menuItem"
-     [routerLink]="menu.path"
-     routerLinkActive="font-semibold"
-     [routerLinkActiveOptions]="{ exact: true }"
-     (click)="selectMenu()"
-     class="block text-[#deb074] hover:underline transition-colors duration-200">
-    {{ menu.label }}
-  </a>
-
-
-</div>
+@if (menuOpen) {
+  <div class="md:hidden px-4 pb-4 space-y-2 bg-white-100 z-40 mt-[88px]">
+    @for (menu of menuItem; track menu.path) {
+      <a
+         [routerLink]="menu.path"
+         routerLinkActive="font-semibold"
+         [routerLinkActiveOptions]="{ exact: true }"
+         (click)="selectMenu()"
+         class="block text-[#deb074] hover:underline transition-colors duration-200">
+        {{ menu.label }}
+      </a>
+    }
+  </div>
+}

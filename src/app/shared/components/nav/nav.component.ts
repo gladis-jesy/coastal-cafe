@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { MainNavComponent } from './main-nav/main-nav.component';
@@ -11,7 +11,7 @@ import { SubNavComponent } from './sub-nav/sub-nav.component';
   templateUrl: './nav.component.html',
   styleUrl: './nav.component.css'
 })
-export class NavComponent implements OnInit {
+export class NavComponent  {
   private router = inject(Router);
 
   isHomePage = true;
@@ -20,10 +20,5 @@ export class NavComponent implements OnInit {
     this.router.events.subscribe(() => {
       this.isHomePage = this.router.url === '/' || this.router.url === '/home';
     });
-  }
-
-  ngOnInit() {
-
-    
   }
 }

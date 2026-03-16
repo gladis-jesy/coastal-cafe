@@ -1,15 +1,18 @@
 <section class="bg-white py-16 px-4 md:px-20 max-w-7xl mx-auto">
-    <h2 class="text-4xl font-extrabold mb-12 text-gray-900 italic text-center">Our Gallery</h2>
+  <h2 class="text-4xl font-extrabold mb-12 text-gray-900 italic text-center">Our Gallery</h2>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-      <button *ngFor="let image of galleryImages; let i = index" type="button"
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    @for (image of galleryImages; track image; let i = $index) {
+      <button type="button"
         class="w-full h-[24rem] cursor-pointer p-0 border-0 bg-transparent"
         (click)="openLightbox(i)" (keydown.enter)="openLightbox(i)">
         <img [src]="image" alt="Gallery image" class="w-full h-full object-cover" />
       </button>
-    </div>
+    }
+  </div>
 
-    <div *ngIf="lightboxOpen" class="fixed inset-0 bg-black/80 flex items-center justify-center z-50"
+  @if (lightboxOpen) {
+    <div class="fixed inset-0 bg-black/80 flex items-center justify-center z-50"
       role="dialog" aria-modal="true" tabindex="0"
       (click)="closeLightbox()" (keydown.escape)="closeLightbox()">
       <div class="relative max-w-3xl w-full px-4" tabindex="-1" (click)="$event.stopPropagation()" (keydown)="$event.stopPropagation()">
@@ -31,4 +34,5 @@
         </button>
       </div>
     </div>
-  </section>
+  }
+</section>

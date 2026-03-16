@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
@@ -9,7 +9,7 @@ import { RouterModule } from '@angular/router';
   templateUrl: './main-nav.component.html',
   styleUrl: './main-nav.component.css',
 })
-export class MainNavComponent implements OnInit {
+export class MainNavComponent {
   menuItem = [
     { label: 'Home', path: '' },
     { label: 'Menu', path: 'menu' },
@@ -20,8 +20,6 @@ export class MainNavComponent implements OnInit {
   menuOpen = false;
   showNavbar = true;
   private lastScrollTop = 0;
-
-  ngOnInit() {}
 
   @HostListener('window:scroll', [])
   onWindowScroll() {

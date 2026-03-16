@@ -1,2 +1,5 @@
-<app-main-nav *ngIf="isHomePage"></app-main-nav>
-<app-sub-nav *ngIf="!isHomePage"></app-sub-nav>
+@if (isHomePage) {
+  <app-main-nav></app-main-nav>
+} @else {
+  <app-sub-nav></app-sub-nav>
+}

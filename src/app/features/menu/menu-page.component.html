@@ -5,7 +5,7 @@
       <div class="space-y-4 md:col-span-2">
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div class="text-lg font-semibold text-black">
-            Showing 
+            Showing
             <span class="text-yellow-600 font-bold">
               {{ paginatedProducts.length }}
             </span> of
@@ -26,61 +26,65 @@
             <option [value]="filteredProducts.length">Show All</option>
           </select>
           </div>
-          
+
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
-          <div *ngFor="let product of paginatedProducts" class="bg-white/40 backdrop-blur-xl rounded-lg shadow-md overflow-hidden flex flex-col">
-            <img [src]="'https://coastalcafe.in/images/' + product.image" alt="Food Item" class="w-full h-48 object-cover">
+          @for (product of paginatedProducts; track product.id) {
+            <div class="bg-white/40 backdrop-blur-xl rounded-lg shadow-md overflow-hidden flex flex-col">
+              <img [src]="'https://coastalcafe.in/images/' + product.image" alt="Food Item" class="w-full h-48 object-cover">
 
-            <div class="p-4 flex flex-col flex-1">
-              <h3 class="text-lg font-semibold text-black">{{ product.name }}</h3>
-              <p class="text-yellow-600 font-bold mt-1">₹{{ product.price }}</p>
-              <button
-                (click)="addToCart(product)"
-                class="mt-auto pt-3 w-full py-2 rounded-md text-sm font-semibold transition-all duration-200"
-                [ngClass]="isAdded(product.id) ? 'bg-green-500 text-white' : 'bg-yellow-600 hover:bg-yellow-700 text-white'">
-                {{ isAdded(product.id) ? '✓ Added' : 'Add to Cart' }}
-              </button>
+              <div class="p-4 flex flex-col flex-1">
+                <h3 class="text-lg font-semibold text-black">{{ product.name }}</h3>
+                <p class="text-yellow-600 font-bold mt-1">₹{{ product.price }}</p>
+                <button
+                  (click)="addToCart(product)"
+                  class="mt-auto pt-3 w-full py-2 rounded-md text-sm font-semibold transition-all duration-200"
+                  [ngClass]="isAdded(product.id) ? 'bg-green-500 text-white' : 'bg-yellow-600 hover:bg-yellow-700 text-white'">
+                  {{ isAdded(product.id) ? '✓ Added' : 'Add to Cart' }}
+                </button>
+              </div>
             </div>
-          </div>
+          }
         </div>
 
 
-        <div *ngIf="totalPages > 1" class="flex justify-center mt-4">
-          <nav
-            class="inline-flex rounded-md shadow-sm bg-white/30 backdrop-blur-md p-1 border border-white/20 ring-1 ring-white/10 space-x-1"
-          >
-            <button
-              class="px-4 py-2 text-sm rounded-md transition-all duration-150 text-black hover:bg-yellow-100 disabled:opacity-50 disabled:cursor-not-allowed"
-              [disabled]="currentPage === 1"
-              (click)="currentPage = currentPage - 1"
+        @if (totalPages > 1) {
+          <div class="flex justify-center mt-4">
+            <nav
+              class="inline-flex rounded-md shadow-sm bg-white/30 backdrop-blur-md p-1 border border-white/20 ring-1 ring-white/10 space-x-1"
             >
-              Prev
-            </button>
-        
-            <ng-container *ngFor="let page of visiblePageNumbers">
               <button
-                class="w-9 h-9 text-sm rounded-md transition-all duration-150 font-medium"
-                [ngClass]="{
-                  'bg-yellow-600 text-white shadow': currentPage === page,
-                  'bg-white/70 text-black hover:bg-yellow-100': currentPage !== page
-                }"
-                (click)="currentPage = page"
+                class="px-4 py-2 text-sm rounded-md transition-all duration-150 text-black hover:bg-yellow-100 disabled:opacity-50 disabled:cursor-not-allowed"
+                [disabled]="currentPage === 1"
+                (click)="currentPage = currentPage - 1"
               >
-                {{ page }}
+                Prev
               </button>
-            </ng-container>
-            
-            <button
-              class="px-4 py-2 text-sm rounded-md transition-all duration-150 text-black hover:bg-yellow-100 disabled:opacity-50 disabled:cursor-not-allowed"
-              [disabled]="currentPage === totalPages"
-              (click)="currentPage = currentPage + 1"
-            >
-              Next
-            </button>
-          </nav>
-        </div>
+
+              @for (page of visiblePageNumbers; track page) {
+                <button
+                  class="w-9 h-9 text-sm rounded-md transition-all duration-150 font-medium"
+                  [ngClass]="{
+                    'bg-yellow-600 text-white shadow': currentPage === page,
+                    'bg-white/70 text-black hover:bg-yellow-100': currentPage !== page
+                  }"
+                  (click)="currentPage = page"
+                >
+                  {{ page }}
+                </button>
+              }
+
+              <button
+                class="px-4 py-2 text-sm rounded-md transition-all duration-150 text-black hover:bg-yellow-100 disabled:opacity-50 disabled:cursor-not-allowed"
+                [disabled]="currentPage === totalPages"
+                (click)="currentPage = currentPage + 1"
+              >
+                Next
+              </button>
+            </nav>
+          </div>
+        }
 
       </div>
 
@@ -97,12 +101,12 @@
             (click)="applyFilter()">Filter</button>
         </div>
 
-    
+
         <div class="bg-white/40 backdrop-blur-xl p-4 rounded-lg w-full shadow-md ring-1 ring-white/20 border border-white/30 relative overflow-hidden">
           <div class="absolute top-0 left-0 right-0 h-3 bg-gradient-to-b from-black/5 to-transparent z-10 rounded-t-lg"></div>
           <h4 class="text-2xl font-semibold mb-4 text-[#deb074]">Product Categories</h4>
-          <div class="grid gap-3  overflow-y-auto pr-1">
-            <button class="w-full flex items-center justify-between text-black text-base text-left px-4 py-2 rounded-lg 
+          <div class="grid gap-3 overflow-y-auto pr-1">
+            <button class="w-full flex items-center justify-between text-black text-base text-left px-4 py-2 rounded-lg
               hover:bg-white/70 transition shadow-sm hover:scale-[1.01] transform duration-200"
               (click)="showAll()">
               <div class="flex items-center gap-3">
@@ -115,35 +119,38 @@
               </div>
             </button>
 
-            <button *ngFor="let category of categories" class="w-full flex items-center justify-between text-black text-base text-left px-4 py-2 rounded-lg 
-              hover:bg-white/70 transition shadow-sm hover:scale-[1.01] transform duration-200"
-              (click)="filterByCategory(category)">
-              <div class="flex items-center gap-3">
-                <div class="bg-white/50 rounded-full p-1 border border-[#deb074] shadow">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="#deb074" viewBox="0 0 24 24">
-                    <path d="M3 20h18v2H3zm2-9c0 .55.45 1 1 1h1v4h10v-4h1c.55 0 1-.45 1-1V4H5v7zm2-5h10v5H7V6z" />
-                  </svg>
+            @for (category of categories; track category.id) {
+              <button class="w-full flex items-center justify-between text-black text-base text-left px-4 py-2 rounded-lg
+                hover:bg-white/70 transition shadow-sm hover:scale-[1.01] transform duration-200"
+                (click)="filterByCategory(category)">
+                <div class="flex items-center gap-3">
+                  <div class="bg-white/50 rounded-full p-1 border border-[#deb074] shadow">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="#deb074" viewBox="0 0 24 24">
+                      <path d="M3 20h18v2H3zm2-9c0 .55.45 1 1 1h1v4h10v-4h1c.55 0 1-.45 1-1V4H5v7zm2-5h10v5H7V6z" />
+                    </svg>
+                  </div>
+                  <span>{{ category.name }}</span>
                 </div>
-                <span>{{ category.name }}</span>
-              </div>
-              <span class="bg-yellow-500 text-white text-xs font-medium rounded-full px-2 py-0.5">+</span>
-            </button>
+                <span class="bg-yellow-500 text-white text-xs font-medium rounded-full px-2 py-0.5">+</span>
+              </button>
+            }
           </div>
         </div>
 
-   
+
         <div class="bg-white/40 backdrop-blur-xl p-4 rounded-lg w-full shadow-md ring-1 ring-white/20 border border-white/30 relative overflow-hidden">
           <div class="absolute top-0 left-0 right-0 h-3 bg-gradient-to-b from-black/5 to-transparent z-10 rounded-t-lg"></div>
           <h4 class="text-2xl font-semibold mb-4 text-[#deb074]">Latest Items</h4>
-          <div class="flex flex-col gap-4  overflow-y-auto pr-1">
-            <div *ngFor="let item of latestItems" class="flex items-center gap-4 bg-white/60 p-3 rounded-lg shadow-sm">
-             
-              <img [src]="'https://coastalcafe.in/images/' + item.image" [alt]="item.name" class="w-16 h-16 object-cover rounded-md border border-gray-300" />
-              <div class="flex-1">
-                <div class="text-base font-semibold text-black truncate">{{ item.name }}</div>
-                <div class="text-sm text-gray-700">₹{{ item.price }}</div>
+          <div class="flex flex-col gap-4 overflow-y-auto pr-1">
+            @for (item of latestItems; track item.name) {
+              <div class="flex items-center gap-4 bg-white/60 p-3 rounded-lg shadow-sm">
+                <img [src]="'https://coastalcafe.in/images/' + item.image" [alt]="item.name" class="w-16 h-16 object-cover rounded-md border border-gray-300" />
+                <div class="flex-1">
+                  <div class="text-base font-semibold text-black truncate">{{ item.name }}</div>
+                  <div class="text-sm text-gray-700">₹{{ item.price }}</div>
+                </div>
               </div>
-            </div>
+            }
           </div>
         </div>
       </div>

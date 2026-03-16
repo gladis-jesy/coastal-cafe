@@ -75,7 +75,9 @@ export class MenuPageComponent implements OnInit, OnDestroy {
     this.currentPage = 1;
   }
 
-  onPriceChange() {}
+  onPriceChange(): void {
+    this.applyFilter();
+  }
 
   applyFilter() {
     this.filteredProducts = this.foodList.filter(product => product.price <= this.priceFilter);
