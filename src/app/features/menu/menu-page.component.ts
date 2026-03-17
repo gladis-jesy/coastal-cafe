@@ -1,7 +1,7 @@
-import { Component, OnInit, OnDestroy, inject } from '@angular/core';
+import { Component, computed, effect, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { FooterComponent } from '../../shared/components/footer/footer.component';
 import { SharedDataService } from '../../core/services/shared-data.service';
 import { SearchService } from '../../core/services/search.service';
@@ -15,119 +15,108 @@ import { Food, Category } from '../../core/models/interfaces';
   templateUrl: './menu-page.component.html',
   styleUrls: ['./menu-page.component.css']
 })
-export class MenuPageComponent implements OnInit, OnDestroy {
+export class MenuPageComponent {
   private sharedDataService = inject(SharedDataService);
   private searchService = inject(SearchService);
   private cartService = inject(CartService);
 
-  foodList: Food[] = [];
-  filteredProducts: Food[] = [];
-  categories: Category[] = [];
-  latestItems: Pick<Food, 'name' | 'price' | 'image'>[] = [];
-  priceFilter = 230;
-  currentPage = 1;
-  itemsPerPage = 20;
-  addedItemIds = new Set<number>();
+ 
+  private readonly foodList = toSignal(this.searchService.filteredFoods$, { initialValue: [] as Food[] });
+  readonly categories = toSignal(this.sharedDataService.categoryData$, { initialValue: [] as Category[] });
 
-  private subscriptions = new Subscription();
+  readonly priceFilter = signal(230);
+  readonly currentPage = signal(1);
+  readonly itemsPerPage = signal(20);
+  private readonly addedItemIds = signal(new Set<number>());
+  private readonly selectedCategoryIds = signal<number[] | null>(null);
+  private readonly priceFilterEnabled = signal(false);
 
-  ngOnInit(): void {
-    this.subscriptions.add(
-      this.searchService.filteredFoods$.subscribe(data => {
-        this.foodList = data;
-        this.filteredProducts = [...data];
-        this.currentPage = 1;
+  readonly latestItems = computed(() => {
+    const withImages = this.foodList().filter(item => item?.image != null);
+    return this.getRandomItems(withImages, 5).map(({ name, price, image }) => ({ name, price, image }));
+  });
 
-        const itemsWithImages = data.filter(item => item?.image != null);
-        this.latestItems = this.getRandomItems(itemsWithImages, 5).map(item => ({
-          name: item?.name,
-          price: item?.price,
-          image: item?.image
-        }));
-      })
-    );
+  readonly filteredProducts = computed(() => {
+    const list = this.foodList();
+    const catIds = this.selectedCategoryIds();
+    if (catIds !== null) return list.filter(p => catIds.includes(p.category));
+    if (this.priceFilterEnabled()) return list.filter(p => p.price <= this.priceFilter());
+    return list;
+  });
 
-    this.subscriptions.add(
-      this.sharedDataService.categoryData$.subscribe(data => {
-        this.categories = data;
-      })
-    );
+  readonly paginatedProducts = computed(() => {
+    const start = (this.currentPage() - 1) * this.itemsPerPage();
+    return this.filteredProducts().slice(start, start + this.itemsPerPage());
+  });
+
+  readonly totalPages = computed(() =>
+    Math.ceil(this.filteredProducts().length / this.itemsPerPage())
+  );
+
+  readonly visiblePageNumbers = computed(() => {
+    const pagesToShow = 7;
+    const half = Math.floor(pagesToShow / 2);
+    const total = this.totalPages();
+    const current = this.currentPage();
+
+    let start = Math.max(current - half, 1);
+    let end = start + pagesToShow - 1;
+    if (end > total) { end = total; start = Math.max(end - pagesToShow + 1, 1); }
+
+    const pages: number[] = [];
+    for (let i = start; i <= end; i++) pages.push(i);
+    return pages;
+  });
+
+  constructor() {
+    effect(() => {
+      this.foodList();       
+      this.currentPage.set(1);
+    });
   }
 
-  ngOnDestroy(): void {
-    this.subscriptions.unsubscribe();
+  filterByCategory(categoryInput: Category | Category[]): void {
+    const ids = (Array.isArray(categoryInput) ? categoryInput : [categoryInput]).map(c => c.id);
+    this.selectedCategoryIds.set(ids);
+    this.priceFilterEnabled.set(false);
+    this.currentPage.set(1);
   }
 
-  getRandomItems(arr: Food[], count: number): Food[] {
-    const shuffled = [...arr].sort(() => 0.5 - Math.random());
-    return shuffled.slice(0, count);
-  }
-
-  filterByCategory(categoryInput: Category | Category[]) {
-    const categoryArray = Array.isArray(categoryInput) ? categoryInput : [categoryInput];
-    const categoryIds = categoryArray.map(cat => cat.id);
-    this.filteredProducts = this.foodList.filter(product => categoryIds.includes(product.category));
-    this.currentPage = 1;
-  }
-
-  showAll() {
-    this.filteredProducts = [...this.foodList];
-    this.currentPage = 1;
+  showAll(): void {
+    this.selectedCategoryIds.set(null);
+    this.priceFilterEnabled.set(false);
+    this.currentPage.set(1);
   }
 
   onPriceChange(): void {
     this.applyFilter();
   }
 
-  applyFilter() {
-    this.filteredProducts = this.foodList.filter(product => product.price <= this.priceFilter);
-    this.currentPage = 1;
+  applyFilter(): void {
+    this.selectedCategoryIds.set(null);
+    this.priceFilterEnabled.set(true);
+    this.currentPage.set(1);
   }
 
   addToCart(product: Food): void {
     this.cartService.addToCart(product);
     this.cartService.openCart();
-    this.addedItemIds.add(product.id);
-    setTimeout(() => this.addedItemIds.delete(product.id), 1500);
+    this.addedItemIds.update(set => new Set(set).add(product.id));
+    setTimeout(() => {
+      this.addedItemIds.update(set => { const next = new Set(set); next.delete(product.id); return next; });
+    }, 1500);
   }
 
   isAdded(productId: number): boolean {
-    return this.addedItemIds.has(productId);
-  }
-
-  get paginatedProducts() {
-    const start = (this.currentPage - 1) * this.itemsPerPage;
-    const end = start + this.itemsPerPage;
-    return this.filteredProducts.slice(start, end);
-  }
-
-  get totalPages(): number {
-    return Math.ceil(this.filteredProducts.length / this.itemsPerPage);
-  }
-
-  get visiblePageNumbers(): number[] {
-    const pagesToShow = 7;
-    const pages: number[] = [];
-    const half = Math.floor(pagesToShow / 2);
-
-    let start = Math.max(this.currentPage - half, 1);
-    let end = start + pagesToShow - 1;
-
-    if (end > this.totalPages) {
-      end = this.totalPages;
-      start = Math.max(end - pagesToShow + 1, 1);
-    }
-
-    for (let i = start; i <= end; i++) {
-      pages.push(i);
-    }
-
-    return pages;
+    return this.addedItemIds().has(productId);
   }
 
   onItemsPerPageChange(event: Event): void {
-    const selectedValue = (event.target as HTMLSelectElement).value;
-    this.itemsPerPage = parseInt(selectedValue, 10);
-    this.currentPage = 1;
+    this.itemsPerPage.set(parseInt((event.target as HTMLSelectElement).value, 10));
+    this.currentPage.set(1);
+  }
+
+  private getRandomItems(arr: Food[], count: number): Food[] {
+    return [...arr].sort(() => 0.5 - Math.random()).slice(0, count);
   }
 }
