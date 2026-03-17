@@ -53,6 +53,11 @@ src/app/
         ├── nav/        # Main nav, sub-nav, nav switcher
         ├── cart/       # Cart sidebar
         └── footer/     # Footer
+
+test/                   # Karma/Jasmine unit tests (mirrors src/app/ structure)
+├── core/services/      # Service specs
+├── features/           # Feature component specs
+└── shared/             # Shared component specs
 ```
 
 ---

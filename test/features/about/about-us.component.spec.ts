@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { AboutUsComponent } from './about-us.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { RouterModule } from '@angular/router';
+import { AboutUsComponent } from '../../../src/app/features/about/about-us.component';
 
 describe('AboutUsComponent', () => {
   let component: AboutUsComponent;
@@ -8,7 +9,7 @@ describe('AboutUsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AboutUsComponent]
+      imports: [AboutUsComponent, HttpClientTestingModule, RouterModule.forRoot([])]
     })
     .compileComponents();
 

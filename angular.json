@@ -92,7 +92,12 @@
             "styles": [
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [],
+            "include": [
+              "../test/**/*.spec.ts"
+            ],
+            "browsers": "ChromeHeadless",
+            "watch": false
           }
         },
         "lint": {
