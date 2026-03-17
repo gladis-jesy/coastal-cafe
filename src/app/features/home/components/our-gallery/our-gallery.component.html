@@ -5,8 +5,9 @@
     @for (image of galleryImages; track image; let i = $index) {
       <button type="button"
         class="w-full h-[24rem] cursor-pointer p-0 border-0 bg-transparent"
+        [attr.aria-label]="'Open gallery image ' + (i + 1)"
         (click)="openLightbox(i)" (keydown.enter)="openLightbox(i)">
-        <img [src]="image" alt="Gallery image" class="w-full h-full object-cover" />
+        <img [src]="image" alt="Gallery image" class="w-full h-full object-cover" loading="lazy" />
       </button>
     }
   </div>
@@ -18,17 +19,17 @@
       <div class="relative max-w-3xl w-full px-4" tabindex="-1" (click)="$event.stopPropagation()" (keydown)="$event.stopPropagation()">
         <img [src]="galleryImages[currentIndex]" alt="Gallery image enlarged" class="w-full h-auto max-h-[80vh] mx-auto rounded shadow-lg" />
 
-        <button (click)="prevImage($event)"
+        <button (click)="prevImage($event)" aria-label="Previous image"
           class="absolute left-4 top-1/2 -translate-y-1/2 text-white text-3xl bg-black/50 px-3 py-2 rounded-full hover:bg-black">
           ‹
         </button>
 
-        <button (click)="nextImage($event)"
+        <button (click)="nextImage($event)" aria-label="Next image"
           class="absolute right-4 top-1/2 -translate-y-1/2 text-white text-3xl bg-black/50 px-3 py-2 rounded-full hover:bg-black">
           ›
         </button>
 
-        <button (click)="closeLightbox()"
+        <button (click)="closeLightbox()" aria-label="Close lightbox"
           class="absolute top-4 right-4 text-white text-2xl hover:bg-gray-700 px-3 py-1 rounded">
           ✕
         </button>

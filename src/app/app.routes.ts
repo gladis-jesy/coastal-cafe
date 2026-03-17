@@ -1,12 +1,8 @@
 import { Routes } from '@angular/router';
-import { HomePageComponent } from './features/home/home-page.component';
-import { MenuPageComponent } from './features/menu/menu-page.component';
-import { AboutUsComponent } from './features/about/about-us.component';
-import { ContactComponent } from './features/contact/contact.component';
 
 export const routes: Routes = [
-    { path: '', component: HomePageComponent },
-    { path: 'menu', component: MenuPageComponent },
-    { path: 'about-us', component: AboutUsComponent },
-    { path: 'contact', component: ContactComponent },
+    { path: '', loadComponent: () => import('./features/home/home-page.component').then(m => m.HomePageComponent) },
+    { path: 'menu', loadComponent: () => import('./features/menu/menu-page.component').then(m => m.MenuPageComponent) },
+    { path: 'about-us', loadComponent: () => import('./features/about/about-us.component').then(m => m.AboutUsComponent) },
+    { path: 'contact', loadComponent: () => import('./features/contact/contact.component').then(m => m.ContactComponent) },
 ];

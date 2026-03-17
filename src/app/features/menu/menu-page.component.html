@@ -32,7 +32,7 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
           @for (product of paginatedProducts; track product.id) {
             <div class="bg-white/40 backdrop-blur-xl rounded-lg shadow-md overflow-hidden flex flex-col">
-              <img [src]="'https://coastalcafe.in/images/' + product.image" alt="Food Item" class="w-full h-48 object-cover">
+              <img [src]="'https://coastalcafe.in/images/' + product.image" [alt]="product.name" class="w-full h-48 object-cover" loading="lazy">
 
               <div class="p-4 flex flex-col flex-1">
                 <h3 class="text-lg font-semibold text-black">{{ product.name }}</h3>
@@ -93,7 +93,7 @@
 
         <div class="bg-white/40 backdrop-blur-xl p-4 rounded-lg w-full shadow-md ring-1 ring-white/20 border border-white/30 relative overflow-hidden">
           <div class="absolute top-0 left-0 right-0 h-3 bg-gradient-to-b from-black/5 to-transparent z-10 rounded-t-lg"></div>
-          <h4 class="font-semibold mb-2 text-black relative z-20">Filter by price</h4>
+          <h3 class="font-semibold mb-2 text-black relative z-20">Filter by price</h3>
           <input type="range" min="0" max="500" step="10" [(ngModel)]="priceFilter" class="w-full relative z-20"
             (input)="onPriceChange()" />
           <p class="mt-1 text-gray-800 relative z-20">Price: ₹0 — ₹{{ priceFilter }}</p>
@@ -104,7 +104,7 @@
 
         <div class="bg-white/40 backdrop-blur-xl p-4 rounded-lg w-full shadow-md ring-1 ring-white/20 border border-white/30 relative overflow-hidden">
           <div class="absolute top-0 left-0 right-0 h-3 bg-gradient-to-b from-black/5 to-transparent z-10 rounded-t-lg"></div>
-          <h4 class="text-2xl font-semibold mb-4 text-[#deb074]">Product Categories</h4>
+          <h3 class="text-2xl font-semibold mb-4 text-[#deb074]">Product Categories</h3>
           <div class="grid gap-3 overflow-y-auto pr-1">
             <button class="w-full flex items-center justify-between text-black text-base text-left px-4 py-2 rounded-lg
               hover:bg-white/70 transition shadow-sm hover:scale-[1.01] transform duration-200"
@@ -140,11 +140,11 @@
 
         <div class="bg-white/40 backdrop-blur-xl p-4 rounded-lg w-full shadow-md ring-1 ring-white/20 border border-white/30 relative overflow-hidden">
           <div class="absolute top-0 left-0 right-0 h-3 bg-gradient-to-b from-black/5 to-transparent z-10 rounded-t-lg"></div>
-          <h4 class="text-2xl font-semibold mb-4 text-[#deb074]">Latest Items</h4>
+          <h3 class="text-2xl font-semibold mb-4 text-[#deb074]">Latest Items</h3>
           <div class="flex flex-col gap-4 overflow-y-auto pr-1">
             @for (item of latestItems; track item.name) {
               <div class="flex items-center gap-4 bg-white/60 p-3 rounded-lg shadow-sm">
-                <img [src]="'https://coastalcafe.in/images/' + item.image" [alt]="item.name" class="w-16 h-16 object-cover rounded-md border border-gray-300" />
+                <img [src]="'https://coastalcafe.in/images/' + item.image" [alt]="item.name" class="w-16 h-16 object-cover rounded-md border border-gray-300" loading="lazy" />
                 <div class="flex-1">
                   <div class="text-base font-semibold text-black truncate">{{ item.name }}</div>
                   <div class="text-sm text-gray-700">₹{{ item.price }}</div>

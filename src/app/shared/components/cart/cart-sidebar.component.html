@@ -7,7 +7,7 @@
     <!-- Header -->
     <div class="flex items-center justify-between px-5 py-4 bg-black text-[#deb074] border-b border-yellow-700">
       <h2 class="text-xl font-bold tracking-wide">Your Cart</h2>
-      <button (click)="close()" class="text-[#deb074] hover:text-white transition">
+      <button (click)="close()" aria-label="Close cart" class="text-[#deb074] hover:text-white transition">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
         </svg>
@@ -29,20 +29,20 @@
 
         @for (item of items; track item.id) {
           <div class="flex items-center gap-3 bg-gray-50 rounded-lg p-3 border border-gray-100">
-            <img [src]="'https://coastalcafe.in/images/' + item.image" alt="{{ item.name }}"
-                 class="w-14 h-14 object-cover rounded-md border border-gray-200 flex-shrink-0">
+            <img [src]="'https://coastalcafe.in/images/' + item.image" [alt]="item.name"
+                 class="w-14 h-14 object-cover rounded-md border border-gray-200 flex-shrink-0" loading="lazy">
             <div class="flex-1 min-w-0">
               <p class="text-sm font-semibold text-black truncate">{{ item.name }}</p>
               <p class="text-xs text-yellow-600 font-bold">₹{{ item.price }}</p>
             </div>
             <div class="flex flex-col items-end gap-1">
               <div class="flex items-center gap-1">
-                <button (click)="decrement(item)"
+                <button (click)="decrement(item)" [attr.aria-label]="'Decrease quantity of ' + item.name"
                   class="w-6 h-6 flex items-center justify-center rounded-full bg-gray-200 hover:bg-yellow-500 hover:text-white text-gray-700 font-bold text-sm transition">
                   −
                 </button>
                 <span class="w-6 text-center text-sm font-medium">{{ item.quantity }}</span>
-                <button (click)="increment(item)"
+                <button (click)="increment(item)" [attr.aria-label]="'Increase quantity of ' + item.name"
                   class="w-6 h-6 flex items-center justify-center rounded-full bg-gray-200 hover:bg-yellow-500 hover:text-white text-gray-700 font-bold text-sm transition">
                   +
                 </button>
