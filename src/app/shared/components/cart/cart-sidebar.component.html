@@ -29,7 +29,8 @@
       @for (item of cartItems(); track item.id) {
         <div class="flex items-center gap-3 bg-gray-50 rounded-lg p-3 border border-gray-100">
           <img [src]="'https://coastalcafe.in/images/' + item.image" [alt]="item.name"
-               class="w-14 h-14 object-cover rounded-md border border-gray-200 flex-shrink-0" loading="lazy">
+               class="w-14 h-14 object-cover rounded-md border border-gray-200 flex-shrink-0"
+               width="56" height="56" loading="lazy">
           <div class="flex-1 min-w-0">
             <p class="text-sm font-semibold text-black truncate">{{ item.name }}</p>
             <p class="text-xs text-yellow-600 font-bold">₹{{ item.price }}</p>

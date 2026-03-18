@@ -39,8 +39,12 @@ app.use(
 
 /**
  * Handle all other requests by rendering the Angular application.
+ * Cache-Control is set to no-cache (revalidate) rather than no-store so the
+ * browser back/forward cache (bfcache) is not blocked. no-store prevents
+ * bfcache restoration in Chromium-based browsers.
  */
 app.use('/**', (req, res, next) => {
+  res.setHeader('Cache-Control', 'no-cache');
   angularApp
     .handle(req)
     .then((response) =>

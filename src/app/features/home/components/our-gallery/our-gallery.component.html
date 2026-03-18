@@ -7,7 +7,7 @@
         class="w-full h-[24rem] cursor-pointer p-0 border-0 bg-transparent"
         [attr.aria-label]="'Open gallery image ' + (i + 1)"
         (click)="openLightbox(i)" (keydown.enter)="openLightbox(i)">
-        <img [src]="image" alt="Gallery image" class="w-full h-full object-cover" loading="lazy" />
+        <img [src]="image" alt="Gallery image" class="w-full h-full object-cover" width="600" height="384" loading="lazy" />
       </button>
     }
   </div>

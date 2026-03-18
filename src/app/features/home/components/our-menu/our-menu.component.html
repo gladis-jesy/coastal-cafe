@@ -34,6 +34,7 @@
             <div class="flex items-center space-x-4 bg-black/50 pr-2 z-10 w-full sm:w-auto">
               <img [src]="'https://coastalcafe.in/images/' + item.image" alt="{{ item.name }}"
                    class="object-cover rounded-full border border-white"
+                   width="70" height="40" loading="lazy"
                    style="width: 70px; height: 40px; border-radius: 50%; object-fit: cover;" />
               <span class="text-sm text-gray-300">{{ item.name }}</span>
             </div>
