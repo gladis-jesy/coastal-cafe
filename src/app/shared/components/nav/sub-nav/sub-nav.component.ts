@@ -37,6 +37,13 @@ export class SubNavComponent implements OnInit {
     this.cartCount$ = this.cartService.cartCount$;
   }
 
+  /**
+   * Clears the search state when leaving the menu route so a query typed on the menu
+   * page doesn't silently pre-filter results when the user navigates back later.
+   * NavigationEnd is filtered specifically because Router emits several intermediate
+   * events (NavigationStart, RoutesRecognized, etc.) per navigation and we only want
+   * to act once the destination URL is final.
+   */
   ngOnInit(): void {
     this.currentUrl = this.router.url;
 
@@ -54,6 +61,11 @@ export class SubNavComponent implements OnInit {
     this.cartService.toggleCart();
   }
 
+  /**
+   * Auto-navigates to /menu when the user types from any other page so the search
+   * results are always visible. Without this redirect the query would update the
+   * SearchService but the current view wouldn't show the filtered list.
+   */
   onSearchInput(): void {
     this.searchService.setQuery(this.searchQuery);
     if (this.searchQuery.trim() && !this.currentUrl.startsWith('/menu')) {
@@ -81,6 +93,13 @@ export class SubNavComponent implements OnInit {
     return this.currentUrl.startsWith('/contact');
   }
 
+  /**
+   * Uses an 80px threshold (vs. the main-nav's 50px) because this secondary bar sits
+   * lower in the stacking order and needs slightly more scroll distance before hiding
+   * to avoid it disappearing before the hero section has cleared the viewport.
+   * The upward-scroll reveal keeps filter/search controls accessible without forcing
+   * users to scroll all the way back to the top.
+   */
   @HostListener('window:scroll')
   onScroll(): void {
     const scrollTop = window.scrollY || document.documentElement.scrollTop;

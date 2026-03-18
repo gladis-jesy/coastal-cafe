@@ -19,6 +19,12 @@ export class OurSpecialsComponent implements OnInit, OnDestroy {
   selectedSpecial: Food | null = null;
   private dataSubscription: Subscription = new Subscription();
 
+  /**
+   * Subscribes to the shared stream rather than making its own API call so the specials
+   * section stays in sync with the rest of the page without an extra network request.
+   * selectedSpecial defaults to the first item so the detail panel is never blank
+   * on initial render — the user can then click to switch.
+   */
   ngOnInit(): void {
 
     this.dataSubscription = this.sharedDataService.foodData$.subscribe((foods) => {

@@ -31,11 +31,22 @@ export class MenuPageComponent {
   private readonly selectedCategoryIds = signal<number[] | null>(null);
   private readonly priceFilterEnabled = signal(false);
 
+  /**
+   * Picks a random subset on each signal update so the "latest picks" sidebar feels
+   * fresh across sessions without requiring a dedicated API endpoint. Only items with
+   * images are eligible to avoid blank cards in the sidebar panel.
+   */
   readonly latestItems = computed(() => {
     const withImages = this.foodList().filter(item => item?.image != null);
     return this.getRandomItems(withImages, 5).map(({ name, price, image }) => ({ name, price, image }));
   });
 
+  /**
+   * Category filter takes precedence over price filter so the two modes are mutually
+   * exclusive — applying both simultaneously would produce confusing results (e.g.,
+   * "show only Starters under ₹230"). Callers reset the inactive filter before setting
+   * the active one to enforce this invariant.
+   */
   readonly filteredProducts = computed(() => {
     const list = this.foodList();
     const catIds = this.selectedCategoryIds();
@@ -44,6 +55,11 @@ export class MenuPageComponent {
     return list;
   });
 
+  /**
+   * Derived from filteredProducts rather than foodList so pagination always operates on
+   * the post-filter set — changing filters resets currentPage to 1 (via the effect in
+   * the constructor), preventing out-of-bounds page states after the total shrinks.
+   */
   readonly paginatedProducts = computed(() => {
     const start = (this.currentPage() - 1) * this.itemsPerPage();
     return this.filteredProducts().slice(start, start + this.itemsPerPage());
@@ -53,6 +69,13 @@ export class MenuPageComponent {
     Math.ceil(this.filteredProducts().length / this.itemsPerPage())
   );
 
+  /**
+   * Limits the rendered page buttons to 7 to prevent the pagination bar from
+   * overflowing on small screens. The window is recentred on the current page and
+   * then clamped at both ends so it never shows page numbers beyond the actual total
+   * or below 1 — the end-clamp also shifts the start leftward to keep exactly 7 buttons
+   * visible when near the last pages.
+   */
   readonly visiblePageNumbers = computed(() => {
     const pagesToShow = 7;
     const half = Math.floor(pagesToShow / 2);
@@ -69,12 +92,24 @@ export class MenuPageComponent {
   });
 
   constructor() {
+    /**
+     * Resets to page 1 whenever the food list signal changes (search results or initial
+     * load) so the user is never left looking at a now-empty page because their previous
+     * page number exceeds the new total. foodList() is read here purely to register the
+     * dependency — the value itself is not used.
+     */
     effect(() => {
-      this.foodList();       
+      this.foodList();
       this.currentPage.set(1);
     });
   }
 
+  /**
+   * Accepts both a single Category and an array to support two call sites: clicking a
+   * single category tab and selecting multiple categories from a filter panel. Normalising
+   * to an array of IDs here keeps filteredProducts' logic simple and uniform.
+   * Price filter is disabled because the two filter modes are mutually exclusive.
+   */
   filterByCategory(categoryInput: Category | Category[]): void {
     const ids = (Array.isArray(categoryInput) ? categoryInput : [categoryInput]).map(c => c.id);
     this.selectedCategoryIds.set(ids);
@@ -98,6 +133,13 @@ export class MenuPageComponent {
     this.currentPage.set(1);
   }
 
+  /**
+   * The addedItemIds set drives a temporary "Added!" visual state on the button.
+   * It is stored as a signal containing a Set so Angular's change detection picks up
+   * the mutation — a plain Set field would not trigger re-renders. The 1.5 s timeout
+   * matches a typical animation duration so the confirmation disappears naturally
+   * rather than being manually dismissed by the user.
+   */
   addToCart(product: Food): void {
     this.cartService.addToCart(product);
     this.cartService.openCart();
@@ -116,6 +158,10 @@ export class MenuPageComponent {
     this.currentPage.set(1);
   }
 
+  /**
+   * Spreads the array before sorting to avoid mutating the original signal-backed array,
+   * which would cause unintended side effects in other computed signals that depend on it.
+   */
   private getRandomItems(arr: Food[], count: number): Food[] {
     return [...arr].sort(() => 0.5 - Math.random()).slice(0, count);
   }

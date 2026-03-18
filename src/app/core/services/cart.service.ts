@@ -21,6 +21,12 @@ export class CartService {
     map(items => items.reduce((sum, item) => sum + item.price * item.quantity, 0))
   );
 
+  /**
+   * Mutates cart state immutably — avoids direct array mutation so all subscribers
+   * automatically receive a fresh reference, enabling OnPush change detection compatibility.
+   * Incrementing quantity on an existing item keeps a single cart entry per product
+   * rather than duplicate rows, which simplifies totalling and UI rendering.
+   */
   addToCart(product: Food): void {
     const current = this.cartItemsSubject.getValue();
     const existing = current.find(item => item.id === product.id);
@@ -43,6 +49,11 @@ export class CartService {
     this.cartItemsSubject.next(current.filter(item => item.id !== id));
   }
 
+  /**
+   * Delegates to removeFromCart when quantity reaches zero so callers don't need to
+   * know the deletion rule — the cart can never be left with a zero-quantity ghost entry
+   * that would inflate the item count badge.
+   */
   updateQuantity(id: number, quantity: number): void {
     if (quantity <= 0) {
       this.removeFromCart(id);

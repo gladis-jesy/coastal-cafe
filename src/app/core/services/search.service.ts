@@ -16,6 +16,19 @@ export class SearchService {
 
   filteredFoods$: Observable<Food[]>;
 
+  /**
+   * Builds the filtered foods observable here rather than in ngOnInit because this is a
+   * root-level service with no lifecycle hooks. combineLatest ensures the filter re-runs
+   * whenever either the food catalog or the search query changes, so downstream components
+   * never need to manually trigger a refresh.
+   *
+   * debounceTime(300) prevents a new filter pass on every keystroke, reducing CPU churn
+   * for large food lists. distinctUntilChanged avoids re-filtering when the query string
+   * hasn't actually changed (e.g. focus/blur without typing).
+   *
+   * Items without an image are stripped here rather than in each component to ensure
+   * incomplete API data never surfaces in the UI regardless of where results are rendered.
+   */
   constructor() {
     this.filteredFoods$ = combineLatest([
       this.sharedDataService.foodData$,

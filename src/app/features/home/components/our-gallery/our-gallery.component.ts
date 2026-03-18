@@ -27,11 +27,21 @@ export class OurGalleryComponent {
     this.lightboxOpen = false;
   }
   
+  /**
+   * stopPropagation prevents the click from bubbling to the lightbox backdrop, which
+   * would immediately close the overlay the moment the user tries to advance to the
+   * next image. Modulo wrapping creates an infinite loop without boundary checks.
+   */
   nextImage(event: Event): void {
     event.stopPropagation();
     this.currentIndex = (this.currentIndex + 1) % this.galleryImages.length;
   }
   
+  /**
+   * Adding galleryImages.length before taking the modulo handles the negative index
+   * that would result from decrementing past zero — JavaScript's % operator can return
+   * negative values for negative operands, so this offset is required for correct wrap.
+   */
   prevImage(event: Event): void {
     event.stopPropagation();
     this.currentIndex =

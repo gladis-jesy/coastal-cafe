@@ -20,6 +20,18 @@ export class OurMenuComponent implements OnInit, OnDestroy {
 
   private subscription = new Subscription();
 
+  /**
+   * combineLatest is used instead of separate subscriptions so the category map is
+   * always rebuilt atomically when either stream emits — avoiding a render where
+   * categories arrive but foods haven't yet (or vice versa), which would produce an
+   * empty menu list.
+   *
+   * The >5 item threshold filters out stub or placeholder categories that have too few
+   * items to be worth displaying as a full tab on the home page preview.
+   *
+   * The subscription is added to a Subscription container so ngOnDestroy can unsubscribe
+   * in one call regardless of how many streams are composed here in the future.
+   */
   ngOnInit(): void {
     const combinedSub = combineLatest([
       this.sharedDataService.categoryData$,

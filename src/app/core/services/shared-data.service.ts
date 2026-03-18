@@ -18,6 +18,16 @@ export class SharedDataService {
   public categoryData$ = this.categoryDataSubject.asObservable();
   public googleReviews$ = this.googleReviewsSubject.asObservable();
 
+  /**
+   * Fires all three API requests in parallel via forkJoin so the app pays one network
+   * round-trip latency instead of three sequential ones. forkJoin is preferred over
+   * combineLatest here because we only need a single snapshot on startup, not ongoing
+   * synchronisation.
+   *
+   * The dual Array.isArray / .results check normalises two possible shapes the API may
+   * return (paginated ApiResponse wrapper vs. raw array) without requiring a separate
+   * adapter layer for each endpoint.
+   */
   loadInitialData(): void {
     forkJoin([
       this.apiService.get<ApiResponse<Food> | Food[]>('https://coastalcafe.in/api/foods/?all=true'),

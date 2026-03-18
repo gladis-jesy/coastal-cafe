@@ -21,6 +21,15 @@ export class MainNavComponent {
   showNavbar = true;
   private lastScrollTop = 0;
 
+  /**
+   * Hides the navbar on downward scroll to reclaim vertical space on smaller screens
+   * while keeping it reachable the moment the user reverses direction. The 50px threshold
+   * prevents an accidental hide on micro-scrolls at the very top of the page where the
+   * hero content is visible and no reclamation is needed.
+   *
+   * lastScrollTop is clamped to 0 to avoid negative values on iOS rubber-band overscroll,
+   * which would otherwise flip the direction check and hide the bar incorrectly.
+   */
   @HostListener('window:scroll', [])
   onWindowScroll() {
     const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
