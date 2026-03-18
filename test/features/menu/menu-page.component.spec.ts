@@ -51,46 +51,45 @@ describe('MenuPageComponent', () => {
   });
 
   it('should load food list from SearchService on init', () => {
-    expect(component.foodList.length).toBe(25);
-    expect(component.filteredProducts.length).toBe(25);
+    expect(component.filteredProducts().length).toBe(25);
   });
 
   it('should load categories from SharedDataService on init', () => {
-    expect(component.categories.length).toBe(3);
+    expect(component.categories().length).toBe(3);
   });
 
   describe('paginatedProducts', () => {
     it('should return first 20 items by default', () => {
-      expect(component.paginatedProducts.length).toBe(20);
+      expect(component.paginatedProducts().length).toBe(20);
     });
 
     it('should return remaining items on the last page', () => {
-      component.currentPage = 2;
-      expect(component.paginatedProducts.length).toBe(5);
+      component.currentPage.set(2);
+      expect(component.paginatedProducts().length).toBe(5);
     });
   });
 
   describe('totalPages', () => {
     it('should be ceil(total / itemsPerPage)', () => {
-      expect(component.totalPages).toBe(2);
+      expect(component.totalPages()).toBe(2);
     });
   });
 
   describe('filterByCategory()', () => {
     it('should filter to only the selected category', () => {
       component.filterByCategory(mockCategories[0]);
-      expect(component.filteredProducts.every(p => p.category === 1)).toBeTrue();
+      expect(component.filteredProducts().every((p: Food) => p.category === 1)).toBeTrue();
     });
 
     it('should reset to page 1', () => {
-      component.currentPage = 2;
+      component.currentPage.set(2);
       component.filterByCategory(mockCategories[0]);
-      expect(component.currentPage).toBe(1);
+      expect(component.currentPage()).toBe(1);
     });
 
     it('should support an array of categories', () => {
       component.filterByCategory([mockCategories[0], mockCategories[1]]);
-      expect(component.filteredProducts.every(p => p.category === 1 || p.category === 2)).toBeTrue();
+      expect(component.filteredProducts().every((p: Food) => p.category === 1 || p.category === 2)).toBeTrue();
     });
   });
 
@@ -98,21 +97,21 @@ describe('MenuPageComponent', () => {
     it('should restore all products', () => {
       component.filterByCategory(mockCategories[0]);
       component.showAll();
-      expect(component.filteredProducts.length).toBe(25);
+      expect(component.filteredProducts().length).toBe(25);
     });
 
     it('should reset to page 1', () => {
-      component.currentPage = 2;
+      component.currentPage.set(2);
       component.showAll();
-      expect(component.currentPage).toBe(1);
+      expect(component.currentPage()).toBe(1);
     });
   });
 
   describe('applyFilter()', () => {
     it('should filter products by max price', () => {
-      component.priceFilter = 150;
+      component.priceFilter.set(150);
       component.applyFilter();
-      expect(component.filteredProducts.every(p => p.price <= 150)).toBeTrue();
+      expect(component.filteredProducts().every((p: Food) => p.price <= 150)).toBeTrue();
     });
   });
 
@@ -139,21 +138,21 @@ describe('MenuPageComponent', () => {
 
   describe('visiblePageNumbers', () => {
     it('should not exceed 7 entries', () => {
-      expect(component.visiblePageNumbers.length).toBeLessThanOrEqual(7);
+      expect(component.visiblePageNumbers().length).toBeLessThanOrEqual(7);
     });
 
     it('should include currentPage', () => {
-      expect(component.visiblePageNumbers).toContain(component.currentPage);
+      expect(component.visiblePageNumbers()).toContain(component.currentPage());
     });
   });
 
   describe('onItemsPerPageChange()', () => {
     it('should update itemsPerPage and reset to page 1', () => {
       const mockEvent = { target: { value: '6' } } as unknown as Event;
-      component.currentPage = 2;
+      component.currentPage.set(2);
       component.onItemsPerPageChange(mockEvent);
-      expect(component.itemsPerPage).toBe(6);
-      expect(component.currentPage).toBe(1);
+      expect(component.itemsPerPage()).toBe(6);
+      expect(component.currentPage()).toBe(1);
     });
   });
 });
