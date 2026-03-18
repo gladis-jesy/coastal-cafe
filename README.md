@@ -112,6 +112,21 @@ npm run serve:ssr:coastal-cafe
 
 ---
 
+## Lighthouse Audit
+
+Audited on [coastalcafe.in](https://coastalcafe.in) using Chrome Lighthouse (March 2026).
+
+| Category | Score |
+|---|---|
+| Performance | 98 |
+| Accessibility | 96 |
+| Best Practices | 100 |
+| SEO | 100 |
+
+![Lighthouse Audit](docs/lighthouse.png)
+
+---
+
 ## Technical Challenges
 
 ### Lighthouse Accessibility Failures
