@@ -48,11 +48,9 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                   d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.5 7h11M10 21a1 1 0 100-2 1 1 0 000 2zm7 0a1 1 0 100-2 1 1 0 000 2z"/>
           </svg>
-          @if (cartCount$ | async; as count) {
-            <span
-              [class.hidden]="count === 0"
-              class="absolute -top-1.5 -right-1.5 bg-red-500 text-white text-xs font-bold rounded-full min-w-[1.1rem] px-1 flex items-center justify-center leading-none">
-              {{ count }}
+          @if (cartCount() > 0) {
+            <span class="absolute -top-1.5 -right-1.5 bg-red-500 text-white text-xs font-bold rounded-full min-w-[1.1rem] px-1 flex items-center justify-center leading-none">
+              {{ cartCount() }}
             </span>
           }
         </button>

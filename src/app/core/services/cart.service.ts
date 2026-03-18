@@ -1,43 +1,41 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Injectable, signal, computed } from '@angular/core';
 import { CartItem, Food } from '../models/interfaces';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
-  private cartItemsSubject = new BehaviorSubject<CartItem[]>([]);
-  private isCartOpenSubject = new BehaviorSubject<boolean>(false);
+  private readonly _cartItems = signal<CartItem[]>([]);
+  private readonly _isCartOpen = signal(false);
 
-  cartItems$: Observable<CartItem[]> = this.cartItemsSubject.asObservable();
-  isCartOpen$: Observable<boolean> = this.isCartOpenSubject.asObservable();
+  readonly cartItems = this._cartItems.asReadonly();
+  readonly isCartOpen = this._isCartOpen.asReadonly();
 
-  cartCount$: Observable<number> = this.cartItems$.pipe(
-    map(items => items.reduce((sum, item) => sum + item.quantity, 0))
+  readonly cartCount = computed(() =>
+    this._cartItems().reduce((sum, item) => sum + item.quantity, 0)
   );
 
-  cartTotal$: Observable<number> = this.cartItems$.pipe(
-    map(items => items.reduce((sum, item) => sum + item.price * item.quantity, 0))
+  readonly cartTotal = computed(() =>
+    this._cartItems().reduce((sum, item) => sum + item.price * item.quantity, 0)
   );
 
   /**
-   * Mutates cart state immutably — avoids direct array mutation so all subscribers
+   * Mutates cart state immutably — avoids direct array mutation so all consumers
    * automatically receive a fresh reference, enabling OnPush change detection compatibility.
    * Incrementing quantity on an existing item keeps a single cart entry per product
    * rather than duplicate rows, which simplifies totalling and UI rendering.
    */
   addToCart(product: Food): void {
-    const current = this.cartItemsSubject.getValue();
+    const current = this._cartItems();
     const existing = current.find(item => item.id === product.id);
     if (existing) {
-      this.cartItemsSubject.next(
+      this._cartItems.set(
         current.map(item =>
           item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
         )
       );
     } else {
-      this.cartItemsSubject.next([
+      this._cartItems.set([
         ...current,
         { id: product.id, name: product.name, price: product.price, image: product.image, quantity: 1 }
       ]);
@@ -45,8 +43,7 @@ export class CartService {
   }
 
   removeFromCart(id: number): void {
-    const current = this.cartItemsSubject.getValue();
-    this.cartItemsSubject.next(current.filter(item => item.id !== id));
+    this._cartItems.update(items => items.filter(item => item.id !== id));
   }
 
   /**
@@ -59,25 +56,24 @@ export class CartService {
       this.removeFromCart(id);
       return;
     }
-    const current = this.cartItemsSubject.getValue();
-    this.cartItemsSubject.next(
-      current.map(item => item.id === id ? { ...item, quantity } : item)
+    this._cartItems.update(items =>
+      items.map(item => item.id === id ? { ...item, quantity } : item)
     );
   }
 
   clearCart(): void {
-    this.cartItemsSubject.next([]);
+    this._cartItems.set([]);
   }
 
   openCart(): void {
-    this.isCartOpenSubject.next(true);
+    this._isCartOpen.set(true);
   }
 
   closeCart(): void {
-    this.isCartOpenSubject.next(false);
+    this._isCartOpen.set(false);
   }
 
   toggleCart(): void {
-    this.isCartOpenSubject.next(!this.isCartOpenSubject.getValue());
+    this._isCartOpen.update(open => !open);
   }
 }

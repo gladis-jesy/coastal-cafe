@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { BehaviorSubject } from 'rxjs';
+import { signal } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { SubNavComponent } from '../../../../../src/app/shared/components/nav/sub-nav/sub-nav.component';
 import { SearchService } from '../../../../../src/app/core/services/search.service';
@@ -14,7 +14,7 @@ describe('SubNavComponent', () => {
   beforeEach(async () => {
     searchServiceSpy = jasmine.createSpyObj('SearchService', ['setQuery', 'clearSearch']);
     cartServiceSpy = jasmine.createSpyObj('CartService', ['toggleCart'], {
-      cartCount$: new BehaviorSubject(0).asObservable()
+      cartCount: signal(0).asReadonly()
     });
 
     await TestBed.configureTestingModule({

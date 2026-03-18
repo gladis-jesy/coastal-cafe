@@ -2,7 +2,6 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CartService } from '../../../core/services/cart.service';
 import { CartItem } from '../../../core/models/interfaces';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-cart-sidebar',
@@ -13,15 +12,9 @@ import { Observable } from 'rxjs';
 export class CartSidebarComponent {
   private cartService = inject(CartService);
 
-  cartItems$: Observable<CartItem[]>;
-  cartTotal$: Observable<number>;
-  isOpen$: Observable<boolean>;
-
-  constructor() {
-    this.cartItems$ = this.cartService.cartItems$;
-    this.cartTotal$ = this.cartService.cartTotal$;
-    this.isOpen$ = this.cartService.isCartOpen$;
-  }
+  readonly cartItems = this.cartService.cartItems;
+  readonly cartTotal = this.cartService.cartTotal;
+  readonly isOpen = this.cartService.isCartOpen;
 
   increment(item: CartItem): void {
     this.cartService.updateQuantity(item.id, item.quantity + 1);
@@ -39,7 +32,7 @@ export class CartSidebarComponent {
     this.cartService.closeCart();
   }
 
-  confirm_order(){
+  confirm_order(): void {
     this.cartService.closeCart();
   }
 

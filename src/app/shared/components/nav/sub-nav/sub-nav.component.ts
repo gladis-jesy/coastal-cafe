@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, NavigationEnd, RouterModule } from '@angular/router';
 import { filter } from 'rxjs/operators';
-import { Observable } from 'rxjs';
 import { SearchService } from '../../../../core/services/search.service';
 import { CartService } from '../../../../core/services/cart.service';
 
@@ -24,7 +23,7 @@ export class SubNavComponent implements OnInit {
   private lastScrollTop = 0;
   currentUrl = '';
   searchQuery = '';
-  cartCount$: Observable<number>;
+  readonly cartCount = this.cartService.cartCount;
 
   menuItem = [
     { label: 'Home', path: '' },
@@ -32,10 +31,6 @@ export class SubNavComponent implements OnInit {
     { label: 'About Us', path: 'about-us' },
     { label: 'Contact', path: 'contact' }
   ];
-
-  constructor() {
-    this.cartCount$ = this.cartService.cartCount$;
-  }
 
   /**
    * Clears the search state when leaving the menu route so a query typed on the menu

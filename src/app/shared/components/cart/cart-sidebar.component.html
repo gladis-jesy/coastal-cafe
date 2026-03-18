@@ -1,4 +1,4 @@
-@if (isOpen$ | async) {
+@if (isOpen()) {
   <!-- Backdrop -->
   <div class="fixed inset-0 bg-black/50 z-40" tabindex="0" aria-label="Close cart" (click)="close()" (keydown.escape)="close()"></div>
 
@@ -16,50 +16,48 @@
 
     <!-- Items -->
     <div class="flex-1 overflow-y-auto px-4 py-4 space-y-4">
-      @if (cartItems$ | async; as items) {
-        @if (items.length === 0) {
-          <div class="text-center text-gray-400 mt-16">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto mb-4 text-gray-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.5 7h11M10 21a1 1 0 100-2 1 1 0 000 2zm7 0a1 1 0 100-2 1 1 0 000 2z"/>
-            </svg>
-            <p class="text-lg font-medium">Your cart is empty</p>
-            <p class="text-sm mt-1">Add items from the menu</p>
-          </div>
-        }
+      @if (cartItems().length === 0) {
+        <div class="text-center text-gray-400 mt-16">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto mb-4 text-gray-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.5 7h11M10 21a1 1 0 100-2 1 1 0 000 2zm7 0a1 1 0 100-2 1 1 0 000 2z"/>
+          </svg>
+          <p class="text-lg font-medium">Your cart is empty</p>
+          <p class="text-sm mt-1">Add items from the menu</p>
+        </div>
+      }
 
-        @for (item of items; track item.id) {
-          <div class="flex items-center gap-3 bg-gray-50 rounded-lg p-3 border border-gray-100">
-            <img [src]="'https://coastalcafe.in/images/' + item.image" [alt]="item.name"
-                 class="w-14 h-14 object-cover rounded-md border border-gray-200 flex-shrink-0" loading="lazy">
-            <div class="flex-1 min-w-0">
-              <p class="text-sm font-semibold text-black truncate">{{ item.name }}</p>
-              <p class="text-xs text-yellow-600 font-bold">₹{{ item.price }}</p>
-            </div>
-            <div class="flex flex-col items-end gap-1">
-              <div class="flex items-center gap-1">
-                <button (click)="decrement(item)" [attr.aria-label]="'Decrease quantity of ' + item.name"
-                  class="w-6 h-6 flex items-center justify-center rounded-full bg-gray-200 hover:bg-yellow-500 hover:text-white text-gray-700 font-bold text-sm transition">
-                  −
-                </button>
-                <span class="w-6 text-center text-sm font-medium">{{ item.quantity }}</span>
-                <button (click)="increment(item)" [attr.aria-label]="'Increase quantity of ' + item.name"
-                  class="w-6 h-6 flex items-center justify-center rounded-full bg-gray-200 hover:bg-yellow-500 hover:text-white text-gray-700 font-bold text-sm transition">
-                  +
-                </button>
-              </div>
-              <button (click)="remove(item.id)" class="text-xs text-red-400 hover:text-red-600 transition">Remove</button>
-            </div>
+      @for (item of cartItems(); track item.id) {
+        <div class="flex items-center gap-3 bg-gray-50 rounded-lg p-3 border border-gray-100">
+          <img [src]="'https://coastalcafe.in/images/' + item.image" [alt]="item.name"
+               class="w-14 h-14 object-cover rounded-md border border-gray-200 flex-shrink-0" loading="lazy">
+          <div class="flex-1 min-w-0">
+            <p class="text-sm font-semibold text-black truncate">{{ item.name }}</p>
+            <p class="text-xs text-yellow-600 font-bold">₹{{ item.price }}</p>
           </div>
-        }
+          <div class="flex flex-col items-end gap-1">
+            <div class="flex items-center gap-1">
+              <button (click)="decrement(item)" [attr.aria-label]="'Decrease quantity of ' + item.name"
+                class="w-6 h-6 flex items-center justify-center rounded-full bg-gray-200 hover:bg-yellow-500 hover:text-white text-gray-700 font-bold text-sm transition">
+                −
+              </button>
+              <span class="w-6 text-center text-sm font-medium">{{ item.quantity }}</span>
+              <button (click)="increment(item)" [attr.aria-label]="'Increase quantity of ' + item.name"
+                class="w-6 h-6 flex items-center justify-center rounded-full bg-gray-200 hover:bg-yellow-500 hover:text-white text-gray-700 font-bold text-sm transition">
+                +
+              </button>
+            </div>
+            <button (click)="remove(item.id)" class="text-xs text-red-400 hover:text-red-600 transition">Remove</button>
+          </div>
+        </div>
       }
     </div>
 
     <!-- Footer -->
-    @if ((cartItems$ | async)?.length) {
+    @if (cartItems().length) {
       <div class="px-5 py-4 border-t border-gray-200 bg-gray-50 space-y-3">
         <div class="flex justify-between items-center text-black font-semibold text-base">
           <span>Total</span>
-          <span class="text-yellow-600">₹{{ cartTotal$ | async }}</span>
+          <span class="text-yellow-600">₹{{ cartTotal() }}</span>
         </div>
         <button (click)="confirm_order()" class="w-full bg-yellow-600 hover:bg-yellow-700 text-white font-semibold py-2.5 rounded-lg transition">
           Confirm Order
