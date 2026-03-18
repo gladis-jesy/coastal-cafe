@@ -24,6 +24,10 @@ jobs:
             - name: Lint code
               run: npm run lint
 
-            # 5. Run the Angular build
+            # 5. Run unit tests
+            - name: Run unit tests
+              run: npm run test -- --watch=false --browsers=ChromeHeadless
+
+            # 6. Run the Angular build
             - name: Build Angular Project
               run: npm run build -- --configuration production
