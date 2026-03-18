@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Title, Meta } from '@angular/platform-browser';
 import { AboutCafeComponent } from './components/about-cafe/about-cafe.component';
 import { OurMenuComponent } from './components/our-menu/our-menu.component';
 import { OurSpecialsComponent } from './components/our-specials/our-specials.component';
@@ -11,7 +12,7 @@ import { OurTestimonialsComponent } from './components/our-testimonials/our-test
   selector: 'app-home-page',
   standalone: true,
   imports: [
-    CommonModule, 
+    CommonModule,
     AboutCafeComponent,
     OurMenuComponent,
     OurSpecialsComponent,
@@ -23,6 +24,11 @@ import { OurTestimonialsComponent } from './components/our-testimonials/our-test
   styleUrl: './home-page.component.css'
 })
 export class HomePageComponent {
+  private title = inject(Title);
+  private meta = inject(Meta);
 
-  
+  constructor() {
+    this.title.setTitle('Coastal Cafe — Seaside Dining in Colachel, Tamil Nadu');
+    this.meta.updateTag({ name: 'description', content: 'Coastal Cafe is a modern seaside restaurant in Colachel, Tamil Nadu offering fresh seafood, coastal dishes, and stunning beach views.' });
+  }
 }

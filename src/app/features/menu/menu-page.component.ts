@@ -1,6 +1,7 @@
 import { Component, computed, effect, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Title, Meta } from '@angular/platform-browser';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FooterComponent } from '../../shared/components/footer/footer.component';
 import { SharedDataService } from '../../core/services/shared-data.service';
@@ -16,6 +17,8 @@ import { Food, Category } from '../../core/models/interfaces';
   styleUrls: ['./menu-page.component.css']
 })
 export class MenuPageComponent {
+  private title = inject(Title);
+  private meta = inject(Meta);
   private sharedDataService = inject(SharedDataService);
   private searchService = inject(SearchService);
   private cartService = inject(CartService);
@@ -92,6 +95,9 @@ export class MenuPageComponent {
   });
 
   constructor() {
+    this.title.setTitle('Menu — Coastal Cafe | Seafood & Coastal Dishes');
+    this.meta.updateTag({ name: 'description', content: 'Browse the full menu at Coastal Cafe in Colachel, Tamil Nadu. Fresh seafood, coastal specials, and more — filter by category or price.' });
+
     /**
      * Resets to page 1 whenever the food list signal changes (search results or initial
      * load) so the user is never left looking at a now-empty page because their previous
