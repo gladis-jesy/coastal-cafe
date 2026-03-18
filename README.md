@@ -112,6 +112,25 @@ npm run serve:ssr:coastal-cafe
 
 ---
 
+## Technical Challenges
+
+### Lighthouse Accessibility Failures
+
+**The Bug**
+After running a Lighthouse audit, the app scored poorly on accessibility and performance. The issues weren't obvious from the UI. Everything looked fine visually, but Lighthouse flagged several structural problems.
+
+**Root Causes**
+- Heading hierarchy was broken - `<h3>` and `<h4>` tags were used directly without a preceding `<h2>`, which confuses screen readers and hurts SEO
+- Icon-only buttons (cart, hamburger, gallery) had no `aria-label`, making them invisible to assistive technologies
+- All route components were eagerly loaded, causing a large initial bundle and slow first paint
+- Offscreen images had no `loading="lazy"`, forcing the browser to fetch them all on page load
+
+**The Fix**
+- Fixed heading hierarchy across all pages to follow correct `h1 -> h2 -> h3` order
+- Added descriptive `aria-label` to every icon-only button
+- Converted all routes to lazy-loaded `loadComponent()` for code splitting
+- Added `loading="lazy"` to all offscreen images
+
 ## Environment
 
 API base URL is configured in `src/environment/environment.ts`:
